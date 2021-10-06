@@ -79,3 +79,5 @@ const usdToCNY = () => {
         </ View >
     )
 }
+
+export default usdToCNY

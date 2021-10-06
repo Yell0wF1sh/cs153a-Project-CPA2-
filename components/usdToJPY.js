@@ -81,3 +81,5 @@ const usdToJPY = () => {
         </ View >
     )
 }
+
+export default usdToJPY

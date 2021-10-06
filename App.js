@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import cnyToUSD from './components/cnyToUSD'
-import usdToCNY from './components/usdToCNY'
-import jpyToUSD from './components/jpyToUSD'
-import usdToJPY from './components/usdToJPY'
+import CNYToUSD from './components/cnyToUSD'
+import USDToCNY from './components/usdToCNY'
+import JPYToUSD from './components/jpyToUSD'
+import USDToJPY from './components/usdToJPY'
 
 
 function HomeScreen({ navigation }) {
@@ -32,37 +32,37 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function cny_to_usd_screen() {
+function cny_to_usd_screen({ navigation }) {
   return (
     <View>
-      <cnyToUSD />
+      <CNYToUSD />
       <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
     </View>
   );
 }
 
-function usd_to_cny_screen() {
+function usd_to_cny_screen({ navigation }) {
   return (
     <View>
-      <usdToCNY />
+      <USDToCNY />
       <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
     </View>
   );
 }
 
-function jpy_to_usd_screen() {
+function jpy_to_usd_screen({ navigation }) {
   return (
     <View>
-      <jpyToUSD />
+      <JPYToUSD />
       <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
     </View>
   );
 }
 
-function usd_to_jpy_screen() {
+function usd_to_jpy_screen({ navigation }) {
   return (
     <View>
-      <usdToJPY />
+      <USDToJPY />
       <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
     </View>
   );

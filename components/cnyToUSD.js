@@ -83,4 +83,4 @@ const cnyToUSD = () => {
     )
 }
 
-//export default cnyToUSD
+export default cnyToUSD

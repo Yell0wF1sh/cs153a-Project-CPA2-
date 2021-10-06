@@ -79,3 +79,5 @@ const jpyToUSD = () => {
         </ View >
     )
 }
+
+export default jpyToUSD
