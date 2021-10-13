@@ -68,6 +68,8 @@ function usd_to_jpy_screen({ navigation }) {
   );
 }
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
     <NavigationContainer>
