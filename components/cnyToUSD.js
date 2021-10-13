@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from 'react';
-import { ScrollView, FlatList, Text, View, StyleSheet, TextInput, Button, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, ImageBackground, FlatList, Text, View, StyleSheet, TextInput, Button, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { FlatList } from 'react-native-web';
 
@@ -15,33 +15,47 @@ const cnyToUSD = () => {
         container: {
             flex: 1,
             justifyContent: 'center',
-            alignItems: 'center',
+            // alignItems: 'center',
             // backgroundColor: 'grey',
+        },
+        convert_area: {
+            flexDirection: 'row',
+            flex: 5,
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            padding: 10
+            // alignItems: 'center',
         },
         box1: {
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'center',
-            backgroundColor: 'green',
+            // backgroundColor: 'limegreen',
+            // paddingRight: 10,
             //alignItems: 'center'
         },
         box2: {
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'center',
-            backgroundColor: 'blue',
+            // backgroundColor: 'pink',
+            // paddingLeft: 10,
             //alignItems: 'center'
         },
         text: {
+            color: 'white',
             fontFamily: 'Times',
             fontSize: 24,
+            textAlign: 'center',
+            backgroundColor: "#000000c0",
         },
         button: {
             alignItems: "flex-start"
         }
     })
 
-    useEffect(() => {getData()
+    useEffect(() => {
+        getData()
     }, [])
 
     const storeData = async (value) => {
@@ -53,34 +67,34 @@ const cnyToUSD = () => {
         }
     }
 
-    const getData = async() => {
+    const getData = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('@cnyToUSD')
             let data = null
-            if (jsonValue!=null) {
+            if (jsonValue != null) {
                 data = JSON.parse(jsonValue)
                 setHistory(data)
-            }   else {
+            } else {
                 setHistory([])
-            } 
-        } catch(e) {
+            }
+        } catch (e) {
             console.dir(e)
         }
     }
 
-    const clearHistory = async() => {
-        try{
+    const clearHistory = async () => {
+        try {
             await AsyncStorage.clear()
-        } catch(e) {
+        } catch (e) {
             console.dir(e)
         }
     }
 
-    const renderHistory = ({item}) => {
+    const renderHistory = ({ item }) => {
         return (
-            <View>
-                <Text>{item.num1}</Text>
-                <Text>{item.num2}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 14, backgroundColor: 'lightgrey', width: 50, textAlign: 'center' }}>{item.num1}</Text>
+                <Text style={{ fontSize: 14, width: 50, textAlign: 'center' }}>{item.num2}</Text>
                 {/* <Button 
                     title='Close History'
                     onPress={() => setViewingHis(false)}
@@ -89,75 +103,95 @@ const cnyToUSD = () => {
         )
     }
 
+    let viewHistoryButton = (<View></View>)
+
+    if (viewingHis != true) {
+        viewHistoryButton =
+            <Button
+                title='View history'
+                onPress={() => { setViewingHis(true) }}
+            />
+    }
+
     let closeHistoryButton = (<View></View>)
 
     if (viewingHis) {
         closeHistoryButton =
-        <Button 
-            title='Close History'
-            onPress={() => {setViewingHis(false)}}
-        />
+            <Button
+                title='Close History'
+                onPress={() => { setViewingHis(false) }}
+            />
     }
 
     let historyView = (<View></View>)
 
     if (viewingHis) {
-        historyView = 
+        historyView =
             <View>
-                <FlatList 
+                <FlatList
                     data={history.reverse()}
                     renderItem={renderHistory}
                     KeyExtractor={item => item.time}
                 />
-                <Button 
+                <Button
                     title='Clear History'
-                    onPress={() => {clearHistory()
-                    setHistory([])}
+                    onPress={() => {
+                        clearHistory()
+                        setHistory([])
+                    }
                     }
                 />
             </View>
     }
 
     return (
-        <ScrollView style={{padding:0, margin:0}}>
+        <ScrollView style={{ padding: 0, margin: 0 }}>
             < View style={styles.container} >
+                <View style={styles.convert_area}>
 
-                <View style={styles.box1}>
-                    <Text style={styles.text}>
-                        Chinese Yuan
-                    </Text>
-                    <View style={{ flexDirection: 'row' }}>
+                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }} resizeMode='cover'>
+                        <View style={styles.box1}>
 
-                        <Text style={styles.text}>￥</Text>
-                        <TextInput
-                            style={styles.text}
-                            placeholder="1"
-                            onChangeText={text => setNum1(text)}
+                            <Text style={styles.text}>
+                                Chinese Yuan
+                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+
+                                <Text style={styles.text}>￥</Text>
+                                <TextInput
+                                    style={styles.text}
+                                    placeholder="1"
+                                    onChangeText={text => setNum1(text)}
+                                />
+                            </View>
+                        </View>
+                    </ImageBackground>
+
+                    <View style={{ padding: 20 }}>
+                        <Image
+                            style={{ width: 32, height: 32 }}
+                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
                         />
                     </View>
-                </View>
 
-                <View style={styles.container} >
-                    <Image
-                        style={{ width: 32, height: 32 }}
-                        source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
-                    />
-                </View>
+                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }} resizeMode='cover'>
+                        <View style={styles.box2}>
+                            <Text style={styles.text}>
+                                US Dollar
+                            </Text>
+                            <Text style={styles.text}>
+                                ${num2}
+                            </Text>
+                        </View>
+                    </ImageBackground>
 
-                <View style={styles.box2}>
-                    <Text style={styles.text}>
-                        US Dollar
-                    </Text>
-                    <Text style={styles.text}>
-                        ${num2}
-                    </Text>
                 </View>
-
-                <View style={styles.box}>
+                <View style={{ flex: 2 }}>
                     <Button
                         title='Convert'
                         style={styles.button}
-                        onPress={() => { let answer = convert(num1)
+                        onPress={() => {
+                            let answer = convert(num1)
                             setNum2(answer)
                             console.log(num2)
                             console.log(answer)
@@ -172,13 +206,10 @@ const cnyToUSD = () => {
                             storeData(newHistory)
                         }}
                     />
+                    {viewHistoryButton}
+                    {historyView}
+                    {closeHistoryButton}
                 </View>
-                <Button 
-                    title='View history'
-                    onPress={() => {setViewingHis(true)}}
-                />
-                {historyView}
-                {closeHistoryButton}
             </ View >
         </ScrollView>
     )

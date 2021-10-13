@@ -36,7 +36,7 @@ function cny_to_usd_screen({ navigation }) {
   return (
     <View>
       <CNYToUSD />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      {/* <Button title="Go to Home" onPress={() => navigation.navigate('Home')} /> */}
     </View>
   );
 }
@@ -45,7 +45,7 @@ function usd_to_cny_screen({ navigation }) {
   return (
     <View>
       <USDToCNY />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      {/* <Button title="Go to Home" onPress={() => navigation.navigate('Home')} /> */}
     </View>
   );
 }
@@ -54,7 +54,7 @@ function jpy_to_usd_screen({ navigation }) {
   return (
     <View>
       <JPYToUSD />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      {/* <Button title="Go to Home" onPress={() => navigation.navigate('Home')} /> */}
     </View>
   );
 }
@@ -63,7 +63,7 @@ function usd_to_jpy_screen({ navigation }) {
   return (
     <View>
       <USDToJPY />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      {/* <Button title="Go to Home" onPress={() => navigation.navigate('Home')} /> */}
     </View>
   );
 }
