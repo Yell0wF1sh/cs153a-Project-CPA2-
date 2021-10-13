@@ -58,6 +58,18 @@ const cnyToUSD = () => {
         getData()
     }, [])
 
+    useEffect(() => {
+        const newHistory = history.concat(
+            {
+                'time': Date.now(),
+                'num1': num1,
+                'num2': num2,
+            }
+        )
+        setHistory(newHistory)
+        storeData(newHistory)
+    }, [num2])
+
     const storeData = async (value) => {
         try {
             const jsonValue = JSON.stringify(value)
@@ -114,6 +126,7 @@ const cnyToUSD = () => {
     }
 
     let closeHistoryButton = (<View></View>)
+    let historyView = (<View></View>)
 
     if (viewingHis) {
         closeHistoryButton =
@@ -121,11 +134,7 @@ const cnyToUSD = () => {
                 title='Close History'
                 onPress={() => { setViewingHis(false) }}
             />
-    }
 
-    let historyView = (<View></View>)
-
-    if (viewingHis) {
         historyView =
             <View>
                 <FlatList
@@ -152,9 +161,7 @@ const cnyToUSD = () => {
                     <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }} resizeMode='cover'>
                         <View style={styles.box1}>
 
-                            <Text style={styles.text}>
-                                Chinese Yuan
-                            </Text>
+                            <Text style={styles.text}>Chinese Yuan</Text>
                             <View style={{ flexDirection: 'row' }}>
 
                                 <Text style={styles.text}>￥</Text>
@@ -176,12 +183,8 @@ const cnyToUSD = () => {
 
                     <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }} resizeMode='cover'>
                         <View style={styles.box2}>
-                            <Text style={styles.text}>
-                                US Dollar
-                            </Text>
-                            <Text style={styles.text}>
-                                ${num2}
-                            </Text>
+                            <Text style={styles.text}>US Dollar</Text>
+                            <Text style={styles.text}>${num2}</Text>
                         </View>
                     </ImageBackground>
 
@@ -190,21 +193,7 @@ const cnyToUSD = () => {
                     <Button
                         title='Convert'
                         style={styles.button}
-                        onPress={() => {
-                            let answer = convert(num1)
-                            setNum2(answer)
-                            console.log(num2)
-                            console.log(answer)
-                            const newHistory = history.concat(
-                                {
-                                    'time': Date.now(),
-                                    'num1': num1,
-                                    'num2': num2,
-                                }
-                            )
-                            setHistory(newHistory)
-                            storeData(newHistory)
-                        }}
+                        onPress={() => {setNum2(convert(num1))}}
                     />
                     {viewHistoryButton}
                     {historyView}
