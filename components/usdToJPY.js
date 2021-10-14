@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, ImageBackground, FlatList, Text, View, StyleSheet, TextInput, Button, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -155,8 +155,8 @@ const usdToJPY = () => {
         <ScrollView style={{ padding: 0, margin: 0 }}>
             < View style={styles.container} >
                 <View style={styles.convert_area}>
-                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }} 
-                                            resizeMode='cover'>
+                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }}
+                        resizeMode='cover'>
                         <View style={styles.box1}>
                             <Text style={styles.text}>
                                 US Dollar
@@ -173,15 +173,15 @@ const usdToJPY = () => {
                         </View>
                     </ImageBackground>
 
-                    <View style={{padding: 20}} >
+                    <View style={{ padding: 20 }} >
                         <Image
                             style={{ width: 32, height: 32 }}
                             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
                         />
                     </View>
 
-                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }} 
-                                        resizeMode='cover'>
+                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
+                        resizeMode='cover'>
                         <View style={styles.box2}>
                             <Text style={styles.text}>
                                 Japanese Yen
@@ -192,7 +192,7 @@ const usdToJPY = () => {
                         </View>
                     </ImageBackground>
 
-                    <View style={{flex: 2}}>
+                    <View style={{ flex: 2 }}>
                         <Button
                             title='Convert'
                             style={styles.button}

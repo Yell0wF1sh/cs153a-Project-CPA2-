@@ -10,6 +10,7 @@ const cnyToUSD = () => {
     const [num2, setNum2] = useState(0.15)
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
+    // const [isReversed, setIsReversed] = useState(false)
     const convert = (value) => { return (value * 0.15) }
     const styles = StyleSheet.create({
         container: {
@@ -57,6 +58,10 @@ const cnyToUSD = () => {
     useEffect(() => {
         getData()
     }, [])
+
+    // useEffect(() => {
+
+    // }, [isReversed])
 
     useEffect(() => {
         const newHistory = history.concat(
@@ -202,7 +207,7 @@ const cnyToUSD = () => {
                     <Button
                         title='Convert'
                         style={styles.button}
-                        onPress={() => {setNum2(convert(num1))}}
+                        onPress={() => { setNum2(convert(num1)) }}
                     />
                     {viewHistoryButton}
                     {historyView}
