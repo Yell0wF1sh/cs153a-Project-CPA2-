@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, ImageBackground, FlatList, Text, View, StyleSheet, TextInput, Button, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,6 +12,8 @@ const usdToCNY = () => {
         container: {
             flex: 1,
             justifyContent: 'center',
+            padding: 10,
+            backgroundColor: 'rgba(255,255,255,.5)'
             // alignItems: 'center',
             // backgroundColor: 'grey',
         },
@@ -152,56 +154,66 @@ const usdToCNY = () => {
 
     return (
         <ScrollView style={{ padding: 0, margin: 0 }}>
-            < View style={styles.container} >
-                <View style={styles.convert_area}>
-                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }} resizeMode='cover'>
-                        <View style={styles.box1}>
-                            <Text style={styles.text}>
-                                US Dollar
-                            </Text>
-                            <View style={{ flexDirection: 'row' }}>
+            <ImageBackground source={{ uri: 'https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1' }}
+                resizeMode='cover'>
+                < View style={styles.container} >
+                    <View style={styles.convert_area}>
+                        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }}
+                            resizeMode='cover' style={{ flex: 1 }}>
+                            <View style={styles.box1}>
+                                <Text style={styles.text}>
+                                    US Dollar
+                                </Text>
+                                <View style={{ flexDirection: 'row' }}>
 
-                                <Text style={styles.text}>$</Text>
-                                <TextInput
-                                    style={styles.text}
-                                    placeholder="1"
-                                    onChangeText={text => setNum1(text)}
-                                />
+                                    <Text style={styles.text}>$</Text>
+                                    <TextInput
+                                        style={{
+                                            width: '91%',
+                                            color: 'white',
+                                            fontFamily: 'Times',
+                                            fontSize: 24,
+                                            textAlign: 'center',
+                                            backgroundColor: "#000000c0",
+                                        }}
+                                        placeholder="1"
+                                        onChangeText={text => setNum1(text)}
+                                    />
+                                </View>
                             </View>
-                        </View>
-                    </ImageBackground>
+                        </ImageBackground>
 
-                    <View style={{ padding: 20 }} >
-                        <Image
-                            style={{ width: 32, height: 32 }}
-                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
+                        <View style={{ padding: 20 }} >
+                            <Image
+                                style={{ width: 32, height: 32 }}
+                                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
+                            />
+                        </View>
+
+                        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }}
+                            resizeMode='cover' style={{ flex: 1 }}>
+                            <View style={styles.box2}>
+                                <Text style={styles.text}>
+                                    Chinese Yuan
+                                </Text>
+                                <Text style={styles.text}>
+                                    ￥{num2}
+                                </Text>
+                            </View>
+                        </ImageBackground>
+                    </View>
+                    <View style={{ flex: 2 }}>
+                        <Button
+                            title='Convert'
+                            style={styles.button}
+                            onPress={() => setNum2(convert(num1))}
                         />
                     </View>
-
-                    <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }} resizeMode='cover'>
-                        <View style={styles.box2}>
-                            <Text style={styles.text}>
-                                Chinese Yuan
-                            </Text>
-                            <Text style={styles.text}>
-                                ￥{num2}
-                            </Text>
-                        </View>
-                    </ImageBackground>
-                </View>
-
-                <View style={{ flex: 2 }}>
-                    <Button
-                        title='Convert'
-                        style={styles.button}
-                        onPress={() => setNum2(convert(num1))}
-                    />
-                </View>
-                {viewHistoryButton}
-                {historyView}
-                {closeHistoryButton}
-
-            </ View >
+                    {viewHistoryButton}
+                    {historyView}
+                    {closeHistoryButton}
+                </ View >
+            </ImageBackground>
         </ScrollView>
     )
 }
