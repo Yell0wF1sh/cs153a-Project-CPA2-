@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, ImageBackground, FlatList, Text, View, StyleSheet, TextInput, Button, Image } from 'react-native';
+import { ScrollView, ImageBackground, FlatList, Text, View, StyleSheet, TextInput, Button, Image, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { TouchableOpacity } from 'react-native-web';
 
 const jpyToUSD = () => {
     const [num1, setNum1] = useState(1)
@@ -8,6 +9,7 @@ const jpyToUSD = () => {
     const convert = (value) => { return (value * 0.009) }
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
+    const [isReversed, setIsReversed] = useState(false)
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -69,6 +71,8 @@ const jpyToUSD = () => {
         storeData(newHistory)
     }, [num2])
 
+    
+
     const storeData = async (value) => {
         try {
             const jsonValue = JSON.stringify(value)
@@ -113,6 +117,93 @@ const jpyToUSD = () => {
             </View>
         )
     }
+    
+    // function view1() {
+    //     return(
+            
+    //     )
+    // }
+
+    let viewJPY = (
+        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
+            resizeMode='cover' style={{ flex: 1 }}>
+            <View style={styles.box2}>
+                <Text style={styles.text}>
+                    Japanese Yen
+                </Text>
+                <Text style={styles.text}>
+                    ¥{num2}
+                </Text>
+            </View>
+        </ImageBackground>
+    )
+
+    let viewJPYEdit = (
+        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
+            resizeMode='cover' style={{ flex: 1 }}>
+            <View style={styles.box1}>
+                <Text style={styles.text}>
+                    Japanese Yen
+                </Text>
+                <View style={{ flexDirection: 'row' }}>
+
+                    <Text style={styles.text}>¥</Text>
+                    <TextInput
+                        style={{
+                            width: '91%',
+                            color: 'white',
+                            fontFamily: 'Times',
+                            fontSize: 24,
+                            textAlign: 'center',
+                            backgroundColor: "#000000c0",
+                        }}
+                        placeholder="1"
+                        onChangeText={text => setNum1(text)}
+                    />
+                </View>
+            </View>
+        </ImageBackground>
+    )
+
+    let viewUSDEdit = (
+        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }}
+            resizeMode='cover' style={{ flex: 1 }}>
+            <View style={styles.box1}>
+                <Text style={styles.text}>US Dollar</Text>
+                <View style={{ flexDirection: 'row' }}>
+
+                    <Text style={styles.text}>$</Text>
+                    <TextInput
+                        style={{
+                            width: '90%',
+                            color: 'white',
+                            fontFamily: 'Times',
+                            fontSize: 24,
+                            textAlign: 'center',
+                            backgroundColor: "#000000c0",
+                        }}
+                        placeholder="1"
+                        onChangeText={text => setNum1(text)}
+                    />
+                </View>
+            </View>
+        </ImageBackground>
+    )
+
+    let viewUSD = (
+        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }}
+            resizeMode='cover' style={{ flex: 1 }}>
+            <View style={styles.box2}>
+                <Text style={styles.text}>
+                    US Dollar
+                </Text>
+                <Text style={styles.text}>
+                    ${num2}
+                </Text>
+            </View>
+        </ImageBackground>
+    )
+
 
     let viewHistoryButton = (<View></View>)
 
@@ -159,49 +250,16 @@ const jpyToUSD = () => {
                 resizeMode='cover'>
                 < View style={styles.container} >
                     <View style={styles.convert_area}>
-                        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
-                            resizeMode='cover' style={{ flex: 1 }}>
-                            <View style={styles.box1}>
-                                <Text style={styles.text}>
-                                    Japanese Yen
-                                </Text>
-                                <View style={{ flexDirection: 'row' }}>
+                        {isReversed?viewUSD:viewJPY}
 
-                                    <Text style={styles.text}>¥</Text>
-                                    <TextInput
-                                        style={{
-                                            width: '91%',
-                                            color: 'white',
-                                            fontFamily: 'Times',
-                                            fontSize: 24,
-                                            textAlign: 'center',
-                                            backgroundColor: "#000000c0",
-                                        }}
-                                        placeholder="1"
-                                        onChangeText={text => setNum1(text)}
-                                    />
-                                </View>
-                            </View>
-                        </ImageBackground>
-
-                        <View style={{ padding: 20 }} >
+                        <TouchableOpacity style={{ padding: 20 }} onPress={() => {setIsReversed(!isReversed)}}>
                             <Image
                                 style={{ width: 32, height: 32 }}
                                 source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
                             />
-                        </View>
+                        </TouchableOpacity>
 
-                        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }}
-                            resizeMode='cover' style={{ flex: 1 }}>
-                            <View style={styles.box2}>
-                                <Text style={styles.text}>
-                                    US Dollar
-                                </Text>
-                                <Text style={styles.text}>
-                                    ${num2}
-                                </Text>
-                            </View>
-                        </ImageBackground>
+                        {isReversed?viewJPYEdit:viewUSDEdit}
                     </View>
                     <View style={{ flex: 2 }}>
                         <Button

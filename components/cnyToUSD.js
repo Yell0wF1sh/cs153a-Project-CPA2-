@@ -122,6 +122,32 @@ const cnyToUSD = () => {
         )
     }
 
+    let viewCNY = (
+                        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }}
+                            resizeMode='cover' style={{ flex: 1 }}>
+                            <View style={styles.box1}>
+
+                                <Text style={styles.text}>Chinese Yuan</Text>
+                                <View style={{ flexDirection: 'row' }}>
+
+                                    <Text style={styles.text}>￥</Text>
+                                    <TextInput
+                                        style={{
+                                            width: '90%',
+                                            color: 'white',
+                                            fontFamily: 'Times',
+                                            fontSize: 24,
+                                            textAlign: 'center',
+                                            backgroundColor: "#000000c0",
+                                        }}
+                                        placeholder="1"
+                                        onChangeText={text => setNum1(text)}
+                                    />
+                                </View>
+                            </View>
+                        </ImageBackground>
+    )
+
     let viewHistoryButton = (<View></View>)
 
     if (viewingHis != true) {
@@ -167,29 +193,7 @@ const cnyToUSD = () => {
                 < View style={styles.container} >
                     <View style={styles.convert_area}>
 
-                        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }}
-                            resizeMode='cover' style={{ flex: 1 }}>
-                            <View style={styles.box1}>
-
-                                <Text style={styles.text}>Chinese Yuan</Text>
-                                <View style={{ flexDirection: 'row' }}>
-
-                                    <Text style={styles.text}>￥</Text>
-                                    <TextInput
-                                        style={{
-                                            width: '90%',
-                                            color: 'white',
-                                            fontFamily: 'Times',
-                                            fontSize: 24,
-                                            textAlign: 'center',
-                                            backgroundColor: "#000000c0",
-                                        }}
-                                        placeholder="1"
-                                        onChangeText={text => setNum1(text)}
-                                    />
-                                </View>
-                            </View>
-                        </ImageBackground>
+                        
 
                         <View style={{ padding: 20 }}>
                             <Image
