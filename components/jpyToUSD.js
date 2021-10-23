@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const jpyToUSD = () => {
     const [num1, setNum1] = useState(1)
     const [num2, setNum2] = useState(0.009)
-    const convert = (value) => { return (Math.floor(value * 0.009*1000)/1000) }
+    const convert = (value) => { return (Math.round(value * 0.009 * 1000) / 1000) }
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
     const [converted, setConverted] = useState(0)
@@ -72,7 +72,16 @@ const jpyToUSD = () => {
         storeData(newHistory)
     }, [converted])
 
-    
+    useEffect(() => {
+        if (isReversed) {
+            setUSD(1)
+            setJPY(110.77)
+        }
+        else {
+            setUSD(0.009)
+            setJPY(1)
+        }
+    }, [isReversed])
 
     const storeData = async (value) => {
         try {
@@ -118,10 +127,10 @@ const jpyToUSD = () => {
             </View>
         )
     }
-    
+
     // function view1() {
     //     return(
-            
+
     //     )
     // }
 
@@ -145,7 +154,7 @@ const jpyToUSD = () => {
                             backgroundColor: "#000000c0",
                         }}
                         placeholder="1"
-                        onChangeText={text => setNum1(text)}
+                        onChangeText={text => setJPY(text)}
                     />
                 </View>
             </View>
@@ -155,13 +164,13 @@ const jpyToUSD = () => {
 
     let viewUSD = (
         <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }}
-            resizeMode='cover' style={{height: '100%', width: '100%', flex: 1 }}>
+            resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
             <View style={styles.box2}>
                 <Text style={styles.text}>
                     US Dollar
                 </Text>
                 <Text style={styles.text}>
-                    ${num2}
+                    ${usd}
                 </Text>
             </View>
         </ImageBackground>
@@ -191,31 +200,32 @@ const jpyToUSD = () => {
 
 
     return (
-            
-                < View style={styles.container} >
-                    <View style={styles.convert_area}>
-                        {viewJPYEdit}
-                        <Image
-                            style={{ width: 32, height: 32 }}
-                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
-                        />
-                        {viewUSD}
-                    </View>
-                    <View style={{ flex: 2 }}>
-                        <Button
-                            title='Convert'
-                            style={styles.button}
-                            onPress={() => {setNum2(convert(num1))
-                                setConverted(converted+1)
-                            }}
-                        />
-                    </View>
-                    <Button
-                        title='Toggle history'
-                        onPress={() => { setViewingHis(!viewingHis) }}
-                        />
-                    {historyView}
-                </ View >
+
+        < View style={styles.container} >
+            <View style={styles.convert_area}>
+                {viewJPYEdit}
+                <Image
+                    style={{ width: 32, height: 32 }}
+                    source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
+                />
+                {viewUSD}
+            </View>
+            <View style={{ flex: 2 }}>
+                <Button
+                    title='Convert'
+                    style={styles.button}
+                    onPress={() => {
+                        setNum2(convert(num1))
+                        setConverted(converted + 1)
+                    }}
+                />
+            </View>
+            <Button
+                title='Toggle history'
+                onPress={() => { setViewingHis(!viewingHis) }}
+            />
+            {historyView}
+        </ View >
     )
 }
 
