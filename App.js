@@ -38,6 +38,7 @@ function HomeScreen({ navigation }) {
   const [selectedPage, setSelectedPage] = useState("Chinese Yuan to US Dollar converter")
 
   return (
+    //push origin
     <ImageBackground source={{ uri: 'https://www.mainebiz.biz/sites/default/files/styles/article_small_cover_image/public/2020-09/file_photo.jpg?h=6d942559&itok=5LXgW5AS' }}
       resizeMode='cover' style={{ flex:1, height: '100%', width: '100%'}}>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', opacity: 1.0, backgroundColor: 'rgba(255,255,255,.5)' }}>
