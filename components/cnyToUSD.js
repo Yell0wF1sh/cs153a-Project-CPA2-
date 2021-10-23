@@ -189,7 +189,7 @@ const cnyToUSD = () => {
     return (
         <ScrollView style={{ padding: 0, margin: 0 }}>
             <ImageBackground source={{ uri: 'https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1' }}
-                resizeMode='cover'>
+                resizeMode='cover' style={{ height: '100%', width: '100%'}}>
                 < View style={styles.container} >
                     <View style={styles.convert_area}>
 
