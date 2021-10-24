@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, ImageBackground, FlatList, Text, View, StyleSheet, TextInput, Button, Image, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { TouchableOpacity } from 'react-native-web';
 
 const jpyToUSD = () => {
     const [num1, setNum1] = useState(1)
@@ -9,51 +8,35 @@ const jpyToUSD = () => {
     const convert = (value) => { return (Math.round(value * 0.009 * 1000) / 1000) }
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
-    const [converted, setConverted] = useState(0)
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            // justifyContent: 'center',
-            padding: 10,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
             backgroundColor: 'rgba(255,255,255,.5)',
-            // alignItems: 'center',
-            // backgroundColor: 'grey',
         },
         convert_area: {
-            // flexDirection: 'row',
-            flex: 3,
+            flex: 6,
             flexWrap: 'wrap',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: 10
-            // alignItems: 'center',
         },
         box1: {
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'center',
-            // backgroundColor: 'limegreen',
-            // paddingRight: 10,
-            //alignItems: 'center'
         },
         box2: {
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'center',
-            // backgroundColor: 'pink',
-            // paddingLeft: 10,
-            //alignItems: 'center'
         },
         text: {
             color: 'white',
-            // fontFamily: 'Times',
             fontSize: 24,
             textAlign: 'center',
             backgroundColor: "#000000c0",
         },
-        button: {
-            alignItems: "flex-start"
-        }
     })
 
     useEffect(() => {
@@ -70,18 +53,8 @@ const jpyToUSD = () => {
         )
         setHistory(newHistory)
         storeData(newHistory)
-    }, [converted])
+    }, [num2])
 
-    useEffect(() => {
-        if (isReversed) {
-            setUSD(1)
-            setJPY(110.77)
-        }
-        else {
-            setUSD(0.009)
-            setJPY(1)
-        }
-    }, [isReversed])
 
     const storeData = async (value) => {
         try {
@@ -117,22 +90,13 @@ const jpyToUSD = () => {
 
     const renderHistory = ({ item }) => {
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <Text style={{ fontSize: 14, backgroundColor: 'lightgrey', width: 50, textAlign: 'center' }}>{item.jpy}</Text>
-                <Text style={{ fontSize: 14, width: 50, textAlign: 'center' }}>{item.usd}</Text>
-                {/* <Button 
-                    title='Close History'
-                    onPress={() => setViewingHis(false)}
-                /> */}
+            <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 2 }}>
+                <Text style={{ fontSize: 16, backgroundColor: 'lightgreen', width: 100, textAlign: 'center' }}>¥{item.jpy}</Text>
+                <Text style={{ fontSize: 16, textAlign: 'center' }}>➔</Text>
+                <Text style={{ fontSize: 16, backgroundColor: 'pink', width: 100, textAlign: 'center' }}>${item.usd}</Text>
             </View>
         )
     }
-
-    // function view1() {
-    //     return(
-
-    //     )
-    // }
 
     let viewJPYEdit = (
         <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
@@ -146,7 +110,7 @@ const jpyToUSD = () => {
                     <Text style={styles.text}>¥</Text>
                     <TextInput
                         style={{
-                            width: '91%',
+                            width: '100%',
                             color: 'white',
                             // fontFamily: 'Times',
                             fontSize: 24,
@@ -154,7 +118,7 @@ const jpyToUSD = () => {
                             backgroundColor: "#000000c0",
                         }}
                         placeholder="1"
-                        onChangeText={text => setJPY(text)}
+                        onChangeText={text => setNum1(text)}
                     />
                 </View>
             </View>
@@ -170,7 +134,7 @@ const jpyToUSD = () => {
                     US Dollar
                 </Text>
                 <Text style={styles.text}>
-                    ${usd}
+                    ${num2}
                 </Text>
             </View>
         </ImageBackground>
@@ -183,12 +147,13 @@ const jpyToUSD = () => {
         historyView =
             <View>
                 <FlatList
-                    data={history.reverse()}
+                    data={history.reverse().slice(0, 5)}
                     renderItem={renderHistory}
                     KeyExtractor={(item) => item.time}
                 />
                 <Button
                     title='Clear History'
+                    color='#d32f2f'
                     onPress={() => {
                         clearHistory()
                         setHistory([])
@@ -204,27 +169,32 @@ const jpyToUSD = () => {
         < View style={styles.container} >
             <View style={styles.convert_area}>
                 {viewJPYEdit}
-                <Image
-                    style={{ width: 32, height: 32 }}
-                    source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
-                />
+                <View style={{ paddingVertical: 10 }}>
+                    <Image
+                        style={{ width: 32, height: 32 }}
+                        source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
+                    />
+                </View>
                 {viewUSD}
+
             </View>
-            <View style={{ flex: 2 }}>
+            <View style={{ flex: 1, paddingTop: 5 }}>
                 <Button
                     title='Convert'
-                    style={styles.button}
+                    color='#4caf50'
                     onPress={() => {
                         setNum2(convert(num1))
-                        setConverted(converted + 1)
                     }}
                 />
             </View>
-            <Button
-                title='Toggle history'
-                onPress={() => { setViewingHis(!viewingHis) }}
-            />
-            {historyView}
+            <View style={{ flex: 4 }}>
+                <Button
+                    title='Toggle history'
+                    color='#e65100'
+                    onPress={() => { setViewingHis(!viewingHis) }}
+                />
+                {historyView}
+            </View>
         </ View >
     )
 }
