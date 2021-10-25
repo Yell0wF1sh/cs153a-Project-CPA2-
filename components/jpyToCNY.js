@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { ScrollView, ImageBackground, FlatList, Text, View, StyleSheet, TextInput, Button, Image, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const usdToJPY = () => {
+const jpyToCNY = () => {
     const [num1, setNum1] = useState(1)
-    const [num2, setNum2] = useState(110.77)
-    const convert = (value) => { return (Math.round(value * 110.77 * 1000) / 1000) }
+    const [num2, setNum2] = useState(0.056)
+    const convert = (value) => { return (Math.round(value * 0.056 * 1000) / 1000) }
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
     const styles = StyleSheet.create({
@@ -47,8 +47,8 @@ const usdToJPY = () => {
         const newHistory = history.concat(
             {
                 'time': Date.now(),
-                'usd': num1,
-                'jpy': num2,
+                'jpy': num1,
+                'cny': num2,
             }
         )
         setHistory(newHistory)
@@ -59,7 +59,7 @@ const usdToJPY = () => {
     const storeData = async (value) => {
         try {
             const jsonValue = JSON.stringify(value)
-            await AsyncStorage.setItem('@usdToJPY', jsonValue)
+            await AsyncStorage.setItem('@jpyToCNY', jsonValue)
         } catch (e) {
             console.dir(e)
         }
@@ -67,7 +67,7 @@ const usdToJPY = () => {
 
     const getData = async () => {
         try {
-            const jsonValue = await AsyncStorage.getItem('@usdToJPY')
+            const jsonValue = await AsyncStorage.getItem('@jpyToCNY')
             let data = null
             if (jsonValue != null) {
                 data = JSON.parse(jsonValue)
@@ -91,23 +91,23 @@ const usdToJPY = () => {
     const renderHistory = ({ item }) => {
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 2 }}>
-                <Text style={{ fontSize: 16, backgroundColor: 'lightgreen', width: 100, textAlign: 'center' }}>${item.usd}</Text>
+                <Text style={{ fontSize: 16, backgroundColor: 'lightgreen', width: 100, textAlign: 'center' }}>￥{item.jpy}</Text>
                 <Text style={{ fontSize: 16, textAlign: 'center' }}>➔</Text>
-                <Text style={{ fontSize: 16, backgroundColor: 'pink', width: 100, textAlign: 'center' }}>¥{item.jpy}</Text>
+                <Text style={{ fontSize: 16, backgroundColor: 'pink', width: 100, textAlign: 'center' }}>¥{item.cny}</Text>
             </View>
         )
     }
 
-    let viewUSDEdit = (
-        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg' }}
+    let viewJPYEdit = (
+        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
             resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
             <View style={styles.box1}>
                 <Text style={styles.text}>
-                    US Dollar
+                    Japanese Yen
                 </Text>
                 <View style={{ flexDirection: 'row' }}>
 
-                    <Text style={styles.text}>$</Text>
+                    <Text style={styles.text}>¥</Text>
                     <TextInput
                         style={{
                             width: '100%',
@@ -126,15 +126,15 @@ const usdToJPY = () => {
     )
 
 
-    let viewJPY = (
-        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
+    let viewCNY = (
+        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }}
             resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
             <View style={styles.box2}>
                 <Text style={styles.text}>
-                    Japanese Yen
+                    Chinese Yuan
                 </Text>
                 <Text style={styles.text}>
-                    ¥{num2}
+                    ￥{num2}
                 </Text>
             </View>
         </ImageBackground>
@@ -168,14 +168,14 @@ const usdToJPY = () => {
 
         < View style={styles.container} >
             <View style={styles.convert_area}>
-                {viewUSDEdit}
+                {viewJPYEdit}
                 <View style={{ paddingVertical: 10 }}>
                     <Image
                         style={{ width: 32, height: 32 }}
                         source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
                     />
                 </View>
-                {viewJPY}
+                {viewCNY}
 
             </View>
             <View style={{ flex: 1, paddingTop: 5 }}>
@@ -199,4 +199,4 @@ const usdToJPY = () => {
     )
 }
 
-export default usdToJPY
+export default jpyToCNY
