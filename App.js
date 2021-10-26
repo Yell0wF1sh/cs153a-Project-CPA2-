@@ -9,7 +9,6 @@ import JPYToUSD from './components/jpyToUSD'
 import USDToJPY from './components/usdToJPY'
 import CNYToJPY from './components/cnyToJPY'
 import JPYToCNY from './components/jpyToCNY'
-import cnyToJPY from './components/cnyToJPY';
 
 // function HomeScreen({ navigation }) {
 //   return (
