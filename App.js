@@ -4,12 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Picker } from '@react-native-community/picker'
 import CNYToUSD from './components/cnyToUSD'
-import USDToCNY from './components/usdToCNY'
-import JPYToUSD from './components/jpyToUSD'
-import USDToJPY from './components/usdToJPY'
-import CNYToJPY from './components/cnyToJPY'
-import JPYToCNY from './components/jpyToCNY'
-import cnyToJPY from './components/cnyToJPY';
+import USDToCNY from './screens/usdToCNY'
+import JPYToUSD from './screens/jpyToUSD'
+import USDToJPY from './screens/usdToJPY'
+import CNYToJPY from './screens/cnyToJPY'
+import JPYToCNY from './screens/jpyToCNY'
+
 
 // function HomeScreen({ navigation }) {
 //   return (
@@ -168,8 +168,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} />
+        <Stack.Screen name="Home" component={HomeScreen} screenOptions/>
+        <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} headerTitleAlign="center"/>
         <Stack.Screen name="US Dollar to Chinese Yuan converter" component={usd_to_cny_screen} />
         <Stack.Screen name="Japanese Yen to US Dollar converter" component={jpy_to_usd_screen} />
         <Stack.Screen name="US Dollar to Japanese Yen converter" component={usd_to_jpy_screen} />
