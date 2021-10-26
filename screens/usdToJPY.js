@@ -44,7 +44,7 @@ const usdToJPY = () => {
     }, [])
 
     useEffect(() => {
-        const newHistory = history.concat(
+        const newHistory = history.reverse().concat(
             {
                 'time': Date.now(),
                 'usd': num1,
@@ -52,7 +52,7 @@ const usdToJPY = () => {
             }
         )
         setHistory(newHistory)
-        storeData(newHistory)
+        storeData(newHistory.reverse())
     }, [num2])
 
 
@@ -147,7 +147,7 @@ const usdToJPY = () => {
         historyView =
             <View>
                 <FlatList
-                    data={history.reverse().slice(0, 5)}
+                    data={history.slice(0, 5)}
                     renderItem={renderHistory}
                     KeyExtractor={(item) => item.time}
                 />

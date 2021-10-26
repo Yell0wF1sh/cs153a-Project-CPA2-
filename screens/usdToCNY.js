@@ -8,6 +8,7 @@ const usdToCNY = () => {
     const convert = (value) => { return (Math.round(value * 6.67 * 1000) / 1000) }
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
+    const [converted, setConverted] = useState(0)
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -44,7 +45,7 @@ const usdToCNY = () => {
     }, [])
 
     useEffect(() => {
-        const newHistory = history.concat(
+        const newHistory = history.reverse().concat(
             {
                 'time': Date.now(),
                 'usd': num1,
@@ -52,8 +53,8 @@ const usdToCNY = () => {
             }
         )
         setHistory(newHistory)
-        storeData(newHistory)
-    }, [num2])
+        storeData(newHistory.reverse())
+    }, [converted])
 
 
     const storeData = async (value) => {
@@ -72,6 +73,8 @@ const usdToCNY = () => {
             if (jsonValue != null) {
                 data = JSON.parse(jsonValue)
                 setHistory(data)
+                // setNum1(data[data.length - 1].usd)
+                // setNum2(data[data.length - 1].cny)
             } else {
                 setHistory([])
             }
@@ -117,7 +120,7 @@ const usdToCNY = () => {
                             textAlign: 'center',
                             backgroundColor: "#000000c0",
                         }}
-                        placeholder="1"
+                        placeholder={num1}
                         onChangeText={text => setNum1(text)}
                     />
                 </View>
@@ -147,7 +150,7 @@ const usdToCNY = () => {
         historyView =
             <View>
                 <FlatList
-                    data={history.reverse().slice(0, 5)}
+                    data={history.slice(0, 5)}
                     renderItem={renderHistory}
                     KeyExtractor={(item) => item.time}
                 />
@@ -184,6 +187,7 @@ const usdToCNY = () => {
                     color='#4caf50'
                     onPress={() => {
                         setNum2(convert(num1))
+                        setConverted(converted + 1)
                     }}
                 />
             </View>

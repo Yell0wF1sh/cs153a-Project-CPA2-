@@ -44,7 +44,7 @@ const cnyToUSD = () => {
     }, [])
 
     useEffect(() => {
-        const newHistory = history.concat(
+        const newHistory = history.reverse().concat(
             {
                 'time': Date.now(),
                 'cny': num1,
@@ -52,7 +52,7 @@ const cnyToUSD = () => {
             }
         )
         setHistory(newHistory)
-        storeData(newHistory)
+        storeData(newHistory.reverse())
     }, [num2])
 
 
@@ -147,7 +147,7 @@ const cnyToUSD = () => {
         historyView =
             <View>
                 <FlatList
-                    data={history.reverse().slice(0, 5)}
+                    data={history.slice(0, 5)}
                     renderItem={renderHistory}
                     KeyExtractor={(item) => item.time}
                 />
