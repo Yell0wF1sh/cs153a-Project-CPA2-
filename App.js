@@ -3,12 +3,13 @@ import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackgroun
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Picker } from '@react-native-community/picker'
-import CNYToUSD from './components/cnyToUSD'
+import CNYToUSD from './screens/cnyToUSD'
 import USDToCNY from './screens/usdToCNY'
 import JPYToUSD from './screens/jpyToUSD'
 import USDToJPY from './screens/usdToJPY'
 import CNYToJPY from './screens/cnyToJPY'
 import JPYToCNY from './screens/jpyToCNY'
+import currency_converter_screen from './screens/currency_converter';
 
 
 // function HomeScreen({ navigation }) {
@@ -54,6 +55,7 @@ function HomeScreen({ navigation }) {
           <Picker.Item label="US Dollar to Japanese Yen" value="US Dollar to Japanese Yen converter" />
           <Picker.Item label="Chinese Yuan to Japanese Yen" value="Chinese Yuan to Japanese Yen converter" />
           <Picker.Item label="Japanese Yen to Chinese Yuan" value="Japanese Yen to Chinese Yuan converter" />
+          <Picker.Item label="Test" value="Currency Converter" />
         </Picker>
         <TouchableOpacity
           style={{ padding: 10 }}
@@ -168,13 +170,14 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} screenOptions/>
-        <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} headerTitleAlign="center"/>
+        <Stack.Screen name="Home" component={HomeScreen} screenOptions />
+        <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} headerTitleAlign="center" />
         <Stack.Screen name="US Dollar to Chinese Yuan converter" component={usd_to_cny_screen} />
         <Stack.Screen name="Japanese Yen to US Dollar converter" component={jpy_to_usd_screen} />
         <Stack.Screen name="US Dollar to Japanese Yen converter" component={usd_to_jpy_screen} />
         <Stack.Screen name="Chinese Yuan to Japanese Yen converter" component={cny_to_jpy_screen} />
         <Stack.Screen name="Japanese Yen to Chinese Yuan converter" component={jpy_to_cny_screen} />
+        <Stack.Screen name="Currency Converter" component={currency_converter_screen} />
       </Stack.Navigator>
     </NavigationContainer>
 
@@ -189,3 +192,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default HomeScreen

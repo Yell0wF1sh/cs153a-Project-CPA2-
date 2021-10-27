@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CurrencyInfo, findCurrency} from '../components/currency_variables'
-
-const name1 = 'Chinese Yuan'
-const name2 = 'US Dollar'
+import { currencyInfo, findCurrency } from '../components/currency_variables'
 
 
-function currency_converter_screen({ navigation }) {
-    return (
-      <ImageBackground source={{ uri: "https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1" }}
-        resizeMode='cover style' style={{ height: "100%", weight: '100%' }}>
-        <CurrencyConvertor />
-      </ImageBackground>
-    )
-  }
+// function currency_converter_screen({ navigation }) {
+//     return (
+//         <View style={{ height: "100%", weight: '100%', backgroundColor: '#b603fc' }}>
+//             <CurrencyConvertor />
+//         </View>
+//     )
+// }
 
 const CurrencyConvertor = () => {
-    const [num1, setNum1] = useState(CurrencyInfo[findCurrency(name1)].asNum1)
-    const [num2, setNum2] = useState(0)
-    const convert = (value) => { return (Math.round(value * 17.775 * 1000) / 1000) }
+    const [num1, setNum1] = useState(NaN)
+    const [num2, setNum2] = useState(NaN)
+    const [name1, setName1] = useState("Chinese Yuan")
+    const [name2, setName2] = useState("Japanese Yen")
+    const [convertValue, setConvertValue] = useState(NaN)
+    const [abbr1, setAbbr1] = useState("Abbreviation1")
+    const [abbr2, setAbbr2] = useState("Abbreviation2")
+    const [symbol1, setSymbol1] = useState("Symbol1")
+    const [symbol2, setSymbol2] = useState("Symbol2")
+    const [image1, setImage1] = useState("Image1URL")
+    const [image2, setImage2] = useState("Image2URL")
+    const [asynSTit, setAsynSTit] = useState(" ")
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
     const styles = StyleSheet.create({
@@ -31,10 +36,12 @@ const CurrencyConvertor = () => {
             backgroundColor: 'rgba(255,255,255,.5)',
         },
         convert_area: {
-            flex: 6,
+            flex: 4,
             flexWrap: 'wrap',
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: 'white',
+            borderRadius: 10,
         },
         box1: {
             flex: 1,
@@ -59,14 +66,29 @@ const CurrencyConvertor = () => {
     }, [])
 
     useEffect(() => {
-        const newHistory = history.concat(
+        setNum1(currencyInfo[findCurrency(name1)].initalState.asNum1)
+        setNum2(currencyInfo[findCurrency(name2)].initalState.asNum2[findCurrency(name1)])
+        setConvertValue(currencyInfo[findCurrency(name2)].initalState.asNum2[findCurrency(name1)])
+        setAbbr1(currencyInfo[findCurrency(name1)].historyTitle)
+        setAbbr2(currencyInfo[findCurrency(name2)].historyTitle)
+        setSymbol1(currencyInfo[findCurrency(name1)].currencySymbol)
+        setSymbol2(currencyInfo[findCurrency(name2)].currencySymbol)
+        setImage1(currencyInfo[findCurrency(name1)].currencyImage)
+        setImage2(currencyInfo[findCurrency(name2)].currencyImage)
+        setAsynSTit('@' + abbr1 + 'To' + abbr2.toUpperCase())
+    }, [name1, name2])
+
+    useEffect(() => {
+        const newHistory = history.reverse().concat(
             {
                 'time': Date.now(),
-                'cny': num1,
-                'jpy': num2,
+                'symbol1': symbol1,
+                'symbol2': symbol2,
+                'num1': num1,
+                'num2': num2,
             }
         )
-        setHistory(newHistory)
+        setHistory(newHistory.reverse())
         storeData(newHistory)
     }, [num2])
 
@@ -74,7 +96,7 @@ const CurrencyConvertor = () => {
     const storeData = async (value) => {
         try {
             const jsonValue = JSON.stringify(value)
-            await AsyncStorage.setItem('@cnyToJPY', jsonValue)
+            await AsyncStorage.setItem(asynSTit, jsonValue)
         } catch (e) {
             console.dir(e)
         }
@@ -82,7 +104,7 @@ const CurrencyConvertor = () => {
 
     const getData = async () => {
         try {
-            const jsonValue = await AsyncStorage.getItem('@cnyToJPY')
+            const jsonValue = await AsyncStorage.getItem(asynSTit)
             let data = null
             if (jsonValue != null) {
                 data = JSON.parse(jsonValue)
@@ -106,54 +128,57 @@ const CurrencyConvertor = () => {
     const renderHistory = ({ item }) => {
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 2 }}>
-                <Text style={{ fontSize: 16, backgroundColor: 'lightgreen', width: 100, textAlign: 'center' }}>￥{item.cny}</Text>
+                {console.log("render history")}
+                {console.log(abbr1)}
+                {console.log(history)}
+                <Text style={{ fontSize: 16, backgroundColor: 'lightgreen', width: 100, textAlign: 'center' }}>{item.symbol1} {item.num1}</Text>
                 <Text style={{ fontSize: 16, textAlign: 'center' }}>➔</Text>
-                <Text style={{ fontSize: 16, backgroundColor: 'pink', width: 100, textAlign: 'center' }}>¥{item.jpy}</Text>
+                <Text style={{ fontSize: 16, backgroundColor: 'pink', width: 100, textAlign: 'center' }}>{item.symbol2} {item.num2}</Text>
             </View>
         )
     }
 
-    let viewCNYEdit = (
-        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }}
-            resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
-            <View style={styles.box1}>
-                <Text style={styles.text}>
-                    Chinese Yuan
-                </Text>
-                <View style={{ flexDirection: 'row' }}>
+    // let viewCNYEdit = (
+    //     <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }}
+    //         resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
+    //         <View style={styles.box1}>
+    //             <Text style={styles.text}>
+    //                 {name1}
+    //             </Text>
+    //             <View style={{ flexDirection: 'row' }}>
 
-                    <Text style={styles.text}>￥</Text>
-                    <TextInput
-                        style={{
-                            width: '100%',
-                            color: 'white',
-                            // fontFamily: 'Times',
-                            fontSize: 24,
-                            textAlign: 'center',
-                            backgroundColor: "#000000c0",
-                        }}
-                        placeholder="1"
-                        onChangeText={text => setNum1(text)}
-                    />
-                </View>
-            </View>
-        </ImageBackground>
-    )
+    //                 <Text style={styles.text}>￥</Text>
+    //                 <TextInput
+    //                     style={{
+    //                         width: '100%',
+    //                         color: 'white',
+    //                         // fontFamily: 'Times',
+    //                         fontSize: 24,
+    //                         textAlign: 'center',
+    //                         backgroundColor: "#000000c0",
+    //                     }}
+    //                     placeholder="1"
+    //                     onChangeText={text => setNum1(text)}
+    //                 />
+    //             </View>
+    //         </View>
+    //     </ImageBackground>
+    // )
 
 
-    let viewJPY = (
-        <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
-            resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
-            <View style={styles.box2}>
-                <Text style={styles.text}>
-                    Japanese Yen
-                </Text>
-                <Text style={styles.text}>
-                    ¥{num2}
-                </Text>
-            </View>
-        </ImageBackground>
-    )
+    // let viewJPY = (
+    //     <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
+    //         resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
+    //         <View style={styles.box2}>
+    //             <Text style={styles.text}>
+    //                 {name2}
+    //             </Text>
+    //             <Text style={styles.text}>
+    //                 ¥{num2}
+    //             </Text>
+    //         </View>
+    //     </ImageBackground>
+    // )
 
     let historyView = (<View></View>)
 
@@ -181,24 +206,64 @@ const CurrencyConvertor = () => {
 
     return (
 
-        < View style={styles.container} >
-            <View style={styles.convert_area}>
-                {viewCNYEdit}
-                <View style={{ paddingVertical: 10 }}>
+        <KeyboardAvoidingView style={styles.container} >
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row' }}>
                     <Image
-                        style={{ width: 32, height: 32 }}
-                        source={{ uri: 'https://cdn-icons-png.flaticon.com/512/35/35660.png' }}
+                        source={image1}
                     />
+                    <Picker
+                        selectedValue={name1}
+                        style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 20, borderRadius: 10 }}
+                        onValueChange={(itemValue) => {
+                            setName1(itemValue)
+                        }}
+                    >
+                        <Picker.Item label='Chinese Yuan' value='Chinese Yuan' />
+                        <Picker.Item label='US Dollar' value='US Dollar' />
+                        <Picker.Item label='Japanese Yen' value='Japanese Yen' />
+                    </Picker>
                 </View>
-                {viewJPY}
-
+                <Text style={{ fontSize: 20 }}>⇄</Text>
+                <View>
+                    <Image
+                        source={image2}
+                    />
+                    <Picker
+                        selectedValue={name2}
+                        style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 20, borderRadius: 10 }}
+                        onValueChange={(itemValue) => {
+                            setName2(itemValue)
+                        }}
+                    >
+                        <Picker.Item label='Chinese Yuan' value='Chinese Yuan' />
+                        <Picker.Item label='US Dollar' value='US Dollar' />
+                        <Picker.Item label='Japanese Yen' value='Japanese Yen' />
+                    </Picker>
+                </View>
+            </View>
+            <View style={styles.convert_area}>
+                <TextInput
+                    style={{
+                        width: '100%',
+                        color: 'black',
+                        // fontFamily: 'Times',
+                        fontSize: 24,
+                        textAlign: 'center',
+                        backgroundColor: "white",
+                    }}
+                    placeholder="1"
+                    onChangeText={text => setNum1(text)}
+                />
+                <Text style={{ color: 'grey', fontSize: 20 }} >{symbol1} {num1} {name1} =</Text>
+                <Text style={{ fontSize: 40, fontWeight: 600 }}>{symbol2} {num2} {name2}</Text>
             </View>
             <View style={{ flex: 1, paddingTop: 5 }}>
                 <Button
                     title='Convert'
                     color='#4caf50'
                     onPress={() => {
-                        setNum2(convert(num1))
+                        setNum2(Math.round(num1 * convertValue * 1000) / 1000)
                     }}
                 />
             </View>
@@ -210,9 +275,10 @@ const CurrencyConvertor = () => {
                 />
                 {historyView}
             </View>
-        </ View >
+        </KeyboardAvoidingView >
     )
 }
 
 
-export default cnyToJPY
+// export default currency_converter_screen
+export default CurrencyConvertor
