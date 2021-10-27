@@ -10,7 +10,7 @@ import USDToJPY from './screens/usdToJPY'
 import CNYToJPY from './screens/cnyToJPY'
 import JPYToCNY from './screens/jpyToCNY'
 import currency_converter_screen from './screens/currency_converter';
-
+import Tabs from './navigation/bottom_tabs'
 
 // function HomeScreen({ navigation }) {
 //   return (
@@ -36,12 +36,10 @@ import currency_converter_screen from './screens/currency_converter';
 //   );
 // }
 
-function HomeScreen({ navigation }) {
+export function HomeScreen({ navigation }) {
   const [selectedPage, setSelectedPage] = useState("Chinese Yuan to US Dollar converter")
   return (
     //push origin
-    <ImageBackground source={{ uri: 'https://www.mainebiz.biz/sites/default/files/styles/article_small_cover_image/public/2020-09/file_photo.jpg?h=6d942559&itok=5LXgW5AS' }}
-      resizeMode='cover' style={{ height: '100%', weight: '100%' }}>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', opacity: 1.0, backgroundColor: 'rgba(255,255,255,.5)' }}>
         <Text style={{ fontFamily: 'Jazz LET', fontSize: 30, textAlign: 'center', fontWeight: 600 }}>Currency Converter</Text>
         <Picker
@@ -66,7 +64,6 @@ function HomeScreen({ navigation }) {
           />
         </TouchableOpacity>
       </View>
-    </ImageBackground>
   )
 }
 
@@ -169,9 +166,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} screenOptions />
-        <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} headerTitleAlign="center" />
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+        <Stack.Screen name="Home" component={Tabs} screenOptions />
+        <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} />
         <Stack.Screen name="US Dollar to Chinese Yuan converter" component={usd_to_cny_screen} />
         <Stack.Screen name="Japanese Yen to US Dollar converter" component={jpy_to_usd_screen} />
         <Stack.Screen name="US Dollar to Japanese Yen converter" component={usd_to_jpy_screen} />
@@ -180,7 +177,6 @@ export default function App() {
         <Stack.Screen name="Currency Converter" component={currency_converter_screen} />
       </Stack.Navigator>
     </NavigationContainer>
-
   );
 }
 
@@ -193,4 +189,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen

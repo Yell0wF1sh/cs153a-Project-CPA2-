@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, } from 'react-native';
 import { createBottomTabNavigator, BottomTabBar, } from '@react-navigation/bottom-tabs';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 
-import { CurrencyConverter } from '../screens/currency_converter'
-import { HomeScreen } from '../App'
+import  currency_converter_screen  from '../screens/currency_converter.js'
+import { HomeScreen } from '../App.js'
 
 const Tab = createBottomTabNavigator()
 
@@ -12,6 +12,7 @@ const Tabs = () => {
     return (
         <Tab.Navigator
             screenOptions={{
+                headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
                     position: 'absolute',
@@ -20,7 +21,7 @@ const Tabs = () => {
                     elevation: 0,
                     backgroundColor: 'white',
                     borderTopColor: 'transparent',
-                    height: 100
+                    height: 50
                 },
             }}
         >
@@ -30,16 +31,28 @@ const Tabs = () => {
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Image />
-                            <Text></Text>
+                            <Image 
+                                source={require('../assets/home.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 20,
+                                    height: 20,
+                                    tintColor: focused? 'purple' : 'black',
+                                }}
+                            />
+                            <Text
+                                style={{color: focused? 'purple' : 'black', fontSize: 8}}
+                            >HOME</Text>
                         </View>
                     )
                 }}
             />
             <Tab.Screen
                 name="Converter"
-                component={CurrencyConverter}
+                component={currency_converter_screen}
             />
         </Tab.Navigator>
     )
 }
+
+export default Tabs

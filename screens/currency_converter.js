@@ -5,13 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo, findCurrency } from '../components/currency_variables'
 
 
-// function currency_converter_screen({ navigation }) {
-//     return (
-//         <View style={{ height: "100%", weight: '100%', backgroundColor: '#b603fc' }}>
-//             <CurrencyConvertor />
-//         </View>
-//     )
-// }
+function currency_converter_screen({ navigation }) {
+    return (
+        <View style={{ height: "100%", weight: '100%', backgroundColor: '#b603fc' }}>
+            <CurrencyConvertor />
+        </View>
+    )
+}
 
 const CurrencyConvertor = () => {
     const [num1, setNum1] = useState(NaN)
@@ -280,5 +280,4 @@ const CurrencyConvertor = () => {
 }
 
 
-// export default currency_converter_screen
-export default CurrencyConvertor
+export default currency_converter_screen
