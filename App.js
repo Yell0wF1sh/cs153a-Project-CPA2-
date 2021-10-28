@@ -3,12 +3,6 @@ import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackgroun
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Picker } from '@react-native-community/picker'
-import CNYToUSD from './screens/cnyToUSD'
-import USDToCNY from './screens/usdToCNY'
-import JPYToUSD from './screens/jpyToUSD'
-import USDToJPY from './screens/usdToJPY'
-import CNYToJPY from './screens/cnyToJPY'
-import JPYToCNY from './screens/jpyToCNY'
 import currency_converter_screen from './screens/currency_converter';
 import Tabs from './navigation/bottom_tabs'
 
@@ -42,7 +36,7 @@ export function HomeScreen({ navigation }) {
     //push origin
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', opacity: 1.0, backgroundColor: 'rgba(255,255,255,.5)' }}>
         <Text style={{ fontFamily: 'Jazz LET', fontSize: 30, textAlign: 'center', fontWeight: 600 }}>Currency Converter</Text>
-        <Picker
+        {/* <Picker
           selectedValue={selectedPage}
           style={{ height: 50, width: 200 }}
           onValueChange={(itemValue) => setSelectedPage(itemValue)}
@@ -62,7 +56,7 @@ export function HomeScreen({ navigation }) {
           <Image source={{ uri: 'https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-right-arrow-icon-png-image_4231911.jpg' }}
             style={{ width: 40, height: 40 }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
   )
 }
@@ -107,60 +101,6 @@ export function HomeScreen({ navigation }) {
 //   }
 // }
 
-function cny_to_usd_screen({ navigation }) {
-  return (
-    <ImageBackground source={{ uri: "https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1" }}
-      resizeMode='cover style' style={{ height: "100%", weight: '100%' }}>
-      <CNYToUSD />
-    </ImageBackground>
-  );
-}
-
-function usd_to_cny_screen({ navigation }) {
-  return (
-    <ImageBackground source={{ uri: "https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1" }}
-      resizeMode='cover style' style={{ height: "100%", weight: '100%' }}>
-      <USDToCNY />
-    </ImageBackground>
-  );
-}
-
-function jpy_to_usd_screen({ navigation }) {
-  return (
-    <ImageBackground source={{ uri: "https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1" }}
-      resizeMode='cover style' style={{ height: "100%", weight: '100%' }}>
-      <JPYToUSD />
-    </ImageBackground>
-  );
-}
-
-function usd_to_jpy_screen({ navigation }) {
-  return (
-    <ImageBackground source={{ uri: "https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1" }}
-      resizeMode='cover style' style={{ height: "100%", weight: '100%' }}>
-      <USDToJPY />
-    </ImageBackground>
-  );
-}
-
-function cny_to_jpy_screen({ navigation }) {
-  return (
-    <ImageBackground source={{ uri: "https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1" }}
-      resizeMode='cover style' style={{ height: "100%", weight: '100%' }}>
-      <CNYToJPY />
-    </ImageBackground>
-  )
-}
-
-function jpy_to_cny_screen({ navigation }) {
-  return (
-    <ImageBackground source={{ uri: "https://graphicriver.img.customer.envatousercontent.com/files/264785414/preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=a249c4ab457116fd16048abd410e19e1" }}
-      resizeMode='cover style' style={{ height: "100%", weight: '100%' }}>
-      <JPYToCNY />
-    </ImageBackground>
-  )
-}
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -168,12 +108,12 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
         <Stack.Screen name="Home" component={Tabs} screenOptions />
-        <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} />
+        {/* <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} />
         <Stack.Screen name="US Dollar to Chinese Yuan converter" component={usd_to_cny_screen} />
         <Stack.Screen name="Japanese Yen to US Dollar converter" component={jpy_to_usd_screen} />
         <Stack.Screen name="US Dollar to Japanese Yen converter" component={usd_to_jpy_screen} />
         <Stack.Screen name="Chinese Yuan to Japanese Yen converter" component={cny_to_jpy_screen} />
-        <Stack.Screen name="Japanese Yen to Chinese Yuan converter" component={jpy_to_cny_screen} />
+        <Stack.Screen name="Japanese Yen to Chinese Yuan converter" component={jpy_to_cny_screen} /> */}
         <Stack.Screen name="Currency Converter" component={currency_converter_screen} />
       </Stack.Navigator>
     </NavigationContainer>

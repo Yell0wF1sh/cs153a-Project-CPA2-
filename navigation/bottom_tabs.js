@@ -35,8 +35,8 @@ const Tabs = () => {
                                 source={require('../assets/home.png')}
                                 resizeMode='contain'
                                 style={{
-                                    width: 20,
-                                    height: 20,
+                                    width: 30,
+                                    height: 30,
                                     tintColor: focused? 'purple' : 'black',
                                 }}
                             />
@@ -50,6 +50,24 @@ const Tabs = () => {
             <Tab.Screen
                 name="Converter"
                 component={currency_converter_screen}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image 
+                                source={require('../assets/interchange.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 30,
+                                    height: 30,
+                                    tintColor: focused? 'purple' : 'black',
+                                }}
+                            />
+                            <Text
+                                style={{color: focused? 'lightpurple' : 'black', fontSize: 8}}
+                            >CONVERTER</Text>
+                        </View>
+                    )
+                }}
             />
         </Tab.Navigator>
     )

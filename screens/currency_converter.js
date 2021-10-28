@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackgroun
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo, findCurrency } from '../components/currency_variables'
+import ConvertArea from '../components/convert';
 
 
 function currency_converter_screen({ navigation }) {
@@ -13,7 +14,7 @@ function currency_converter_screen({ navigation }) {
     )
 }
 
-const CurrencyConvertor = () => {
+export const CurrencyConvertor = () => {
     const [num1, setNum1] = useState(NaN)
     const [num2, setNum2] = useState(NaN)
     const [name1, setName1] = useState("Chinese Yuan")
@@ -28,6 +29,7 @@ const CurrencyConvertor = () => {
     const [asynSTit, setAsynSTit] = useState(" ")
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -138,48 +140,6 @@ const CurrencyConvertor = () => {
         )
     }
 
-    // let viewCNYEdit = (
-    //     <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg' }}
-    //         resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
-    //         <View style={styles.box1}>
-    //             <Text style={styles.text}>
-    //                 {name1}
-    //             </Text>
-    //             <View style={{ flexDirection: 'row' }}>
-
-    //                 <Text style={styles.text}>￥</Text>
-    //                 <TextInput
-    //                     style={{
-    //                         width: '100%',
-    //                         color: 'white',
-    //                         // fontFamily: 'Times',
-    //                         fontSize: 24,
-    //                         textAlign: 'center',
-    //                         backgroundColor: "#000000c0",
-    //                     }}
-    //                     placeholder="1"
-    //                     onChangeText={text => setNum1(text)}
-    //                 />
-    //             </View>
-    //         </View>
-    //     </ImageBackground>
-    // )
-
-
-    // let viewJPY = (
-    //     <ImageBackground source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg' }}
-    //         resizeMode='cover' style={{ height: '100%', width: '100%', flex: 1 }}>
-    //         <View style={styles.box2}>
-    //             <Text style={styles.text}>
-    //                 {name2}
-    //             </Text>
-    //             <Text style={styles.text}>
-    //                 ¥{num2}
-    //             </Text>
-    //         </View>
-    //     </ImageBackground>
-    // )
-
     let historyView = (<View></View>)
 
     if (viewingHis) {
@@ -207,11 +167,8 @@ const CurrencyConvertor = () => {
     return (
 
         <KeyboardAvoidingView style={styles.container} >
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image
-                        source={image1}
-                    />
+            <View style={styles.convert_area}>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Picker
                         selectedValue={name1}
                         style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 20, borderRadius: 10 }}
@@ -223,12 +180,9 @@ const CurrencyConvertor = () => {
                         <Picker.Item label='US Dollar' value='US Dollar' />
                         <Picker.Item label='Japanese Yen' value='Japanese Yen' />
                     </Picker>
-                </View>
-                <Text style={{ fontSize: 20 }}>⇄</Text>
-                <View>
-                    <Image
-                        source={image2}
-                    />
+
+                    <Text style={{ fontSize: 20 }}>⇄</Text>
+                    
                     <Picker
                         selectedValue={name2}
                         style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 20, borderRadius: 10 }}
@@ -241,8 +195,6 @@ const CurrencyConvertor = () => {
                         <Picker.Item label='Japanese Yen' value='Japanese Yen' />
                     </Picker>
                 </View>
-            </View>
-            <View style={styles.convert_area}>
                 <TextInput
                     style={{
                         width: '100%',
@@ -252,11 +204,20 @@ const CurrencyConvertor = () => {
                         textAlign: 'center',
                         backgroundColor: "white",
                     }}
-                    placeholder="1"
+                    placeholder={num1}
                     onChangeText={text => setNum1(text)}
                 />
-                <Text style={{ color: 'grey', fontSize: 20 }} >{symbol1} {num1} {name1} =</Text>
-                <Text style={{ fontSize: 40, fontWeight: 600 }}>{symbol2} {num2} {name2}</Text>
+                {/* <Text style={{ color: 'grey', fontSize: 20 }} >
+                {symbol1} 
+                 {name1} =</Text>
+                <Text style={{ fontSize: 40, fontWeight: 600 }}>{symbol2} {num2} {name2}</Text> */}
+                <ConvertArea 
+                    from={abbr1}
+                    to={abbr2}
+                    symbolFrom={symbol1}
+                    symbolTo={symbol2}
+                    amount={num1}
+                />
             </View>
             <View style={{ flex: 1, paddingTop: 5 }}>
                 <Button
