@@ -60,6 +60,17 @@ export const currencyInfo = [
 
 export const currencyList = "CNY,USD,JPY"
 
+const currencySymbol = () => {
+    fetch('http://data.fixer.io/api/latest?access_key=b16fced1bae2406403f788e14b2ff326&base=' + abbr1.toUpperCase() + '&symbols=' + currencyList)
+        .then((response) => response.json())
+        .then((convertdata) => {
+            setConvertValueList(convertdata)
+            console.log(abbr1.toUpperCase())
+            console.log(convertdata)
+        })
+        .catch((error) => console.error(error))
+}
+
 export const findCurrency = (value) => {
     for (let i = 0; i < currencyInfo.length; i++) {
         if (value == currencyInfo[i].currencyName) {

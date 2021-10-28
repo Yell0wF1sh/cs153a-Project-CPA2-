@@ -41,7 +41,7 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{color: focused? 'purple' : 'black', fontSize: 8}}
+                                style={{color: focused? 'purple' : 'black', fontSize: 8, fontWeight: 600}}
                             >HOME</Text>
                         </View>
                     )
@@ -63,7 +63,7 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{color: focused? 'lightpurple' : 'black', fontSize: 8}}
+                                style={{color: focused? 'lightpurple' : 'black', fontSize: 8, fontWeight: 600}}
                             >CONVERTER</Text>
                         </View>
                     )

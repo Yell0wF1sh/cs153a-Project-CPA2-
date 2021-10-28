@@ -15,18 +15,15 @@ function currency_converter_screen({ navigation }) {
 }
 
 export const CurrencyConvertor = () => {
-    const [num1, setNum1] = useState(NaN)
+    const [num1, setNum1] = useState(1)
     const [num2, setNum2] = useState(NaN)
     const [name1, setName1] = useState("Chinese Yuan")
     const [name2, setName2] = useState("Japanese Yen")
     const [convertValueList, setConvertValueList] = useState([])
-    const [convertValue, setConvertValue] = useState(NaN)
-    const [abbr1, setAbbr1] = useState("Abbreviation1")
-    const [abbr2, setAbbr2] = useState("Abbreviation2")
+    const [abbr1, setAbbr1] = useState("CNY")
+    const [abbr2, setAbbr2] = useState("JNY")
     const [symbol1, setSymbol1] = useState("Symbol1")
     const [symbol2, setSymbol2] = useState("Symbol2")
-    const [image1, setImage1] = useState("Image1URL")
-    const [image2, setImage2] = useState("Image2URL")
     const [asynSTit, setAsynSTit] = useState(" ")
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
@@ -70,30 +67,28 @@ export const CurrencyConvertor = () => {
     }, [])
 
     useEffect(() => {
-        setNum1(currencyInfo[findCurrency(name1)].initalState.asNum1)
-        setNum2(currencyInfo[findCurrency(name2)].initalState.asNum2[findCurrency(name1)])
-        setConvertValue(currencyInfo[findCurrency(name2)].initalState.asNum2[findCurrency(name1)])
+        // setNum1(currencyInfo[findCurrency(name1)].initalState.asNum1)
+        setNum2(convertValueList['result'])
         setAbbr1(currencyInfo[findCurrency(name1)].historyTitle)
         setAbbr2(currencyInfo[findCurrency(name2)].historyTitle)
         setSymbol1(currencyInfo[findCurrency(name1)].currencySymbol)
         setSymbol2(currencyInfo[findCurrency(name2)].currencySymbol)
-        setImage1(currencyInfo[findCurrency(name1)].currencyImage)
-        setImage2(currencyInfo[findCurrency(name2)].currencyImage)
+        console.log(convertValueList)
+        console.log(isAllSet)
         // .finally(() => setLoading(false));
         setAsynSTit('@' + abbr1 + 'To' + abbr2.toUpperCase())
         setIsAllSet(false)
+        console.log(isAllSet)
     }, [name1, name2])
 
     useEffect(() => {
-        fetch('http://data.fixer.io/api/latest?access_key=22f408d3be87ec11e691052c2131e5b7&base=' + abbr1.toUpperCase() + '&symbols=' + currencyList)
+        fetch('http://data.fixer.io/api/convert?access_key=b16fced1bae2406403f788e14b2ff326&from=' + abbr1.toUpperCase() + '&to=' + abbr2.toUpperCase() + '&amount=' + num1)
             .then((response) => response.json())
             .then((convertdata) => {
                 setConvertValueList(convertdata)
-                console.log(abbr1.toUpperCase())
-                console.log(convertdata)
             })
             .catch((error) => console.error(error))
-    }, [isAllSet == true])
+    }, [isAllSet])
 
     useEffect(() => {
         const newHistory = history.reverse().concat(
@@ -210,12 +205,6 @@ export const CurrencyConvertor = () => {
                         <Picker.Item label='Japanese Yen' value='Japanese Yen' />
                     </Picker>
                 </View>
-                <Button
-                    title='✓'
-                    onPress={() => {
-                        setIsAllSet(true)
-                    }}
-                />
                 <TextInput
                     style={{
                         width: '100%',
@@ -229,6 +218,7 @@ export const CurrencyConvertor = () => {
                     onChangeText={text => setNum1(text)}
                 />
                 <Text style={{ color: 'grey', fontSize: 20 }} >
+                    {num1}
                     {symbol1}
                     {name1} =</Text>
                 <Text style={{ fontSize: 40, fontWeight: 600 }}>{symbol2} {num2} {name2}</Text>
@@ -238,7 +228,7 @@ export const CurrencyConvertor = () => {
                     title='Convert'
                     color='#4caf50'
                     onPress={() => {
-                        setNum2(Math.round(num1 * convertValue * 1000) / 1000)
+                        setIsAllSet(true)
                     }}
                 />
             </View>
