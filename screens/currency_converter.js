@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { currencyInfo, findCurrency } from '../components/currency_variables'
+import { currencyInfo, findCurrency, currencyList } from '../components/currency_variables'
 import ConvertArea from '../components/convert';
 
 
@@ -19,6 +19,7 @@ export const CurrencyConvertor = () => {
     const [num2, setNum2] = useState(NaN)
     const [name1, setName1] = useState("Chinese Yuan")
     const [name2, setName2] = useState("Japanese Yen")
+    const [convertValueList, setConvertValueList] = useState([])
     const [convertValue, setConvertValue] = useState(NaN)
     const [abbr1, setAbbr1] = useState("Abbreviation1")
     const [abbr2, setAbbr2] = useState("Abbreviation2")
@@ -29,6 +30,7 @@ export const CurrencyConvertor = () => {
     const [asynSTit, setAsynSTit] = useState(" ")
     const [history, setHistory] = useState([])
     const [viewingHis, setViewingHis] = useState(false)
+    const [isAllSet, setIsAllSet] = useState(false)
 
     const styles = StyleSheet.create({
         container: {
@@ -77,8 +79,21 @@ export const CurrencyConvertor = () => {
         setSymbol2(currencyInfo[findCurrency(name2)].currencySymbol)
         setImage1(currencyInfo[findCurrency(name1)].currencyImage)
         setImage2(currencyInfo[findCurrency(name2)].currencyImage)
+        // .finally(() => setLoading(false));
         setAsynSTit('@' + abbr1 + 'To' + abbr2.toUpperCase())
+        setIsAllSet(false)
     }, [name1, name2])
+
+    useEffect(() => {
+        fetch('http://data.fixer.io/api/latest?access_key=22f408d3be87ec11e691052c2131e5b7&base=' + abbr1.toUpperCase() + '&symbols=' + currencyList)
+            .then((response) => response.json())
+            .then((convertdata) => {
+                setConvertValueList(convertdata)
+                console.log(abbr1.toUpperCase())
+                console.log(convertdata)
+            })
+            .catch((error) => console.error(error))
+    }, [isAllSet == true])
 
     useEffect(() => {
         const newHistory = history.reverse().concat(
@@ -182,7 +197,7 @@ export const CurrencyConvertor = () => {
                     </Picker>
 
                     <Text style={{ fontSize: 20 }}>⇄</Text>
-                    
+
                     <Picker
                         selectedValue={name2}
                         style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 20, borderRadius: 10 }}
@@ -195,6 +210,12 @@ export const CurrencyConvertor = () => {
                         <Picker.Item label='Japanese Yen' value='Japanese Yen' />
                     </Picker>
                 </View>
+                <Button
+                    title='✓'
+                    onPress={() => {
+                        setIsAllSet(true)
+                    }}
+                />
                 <TextInput
                     style={{
                         width: '100%',
@@ -207,17 +228,10 @@ export const CurrencyConvertor = () => {
                     placeholder={num1}
                     onChangeText={text => setNum1(text)}
                 />
-                {/* <Text style={{ color: 'grey', fontSize: 20 }} >
-                {symbol1} 
-                 {name1} =</Text>
-                <Text style={{ fontSize: 40, fontWeight: 600 }}>{symbol2} {num2} {name2}</Text> */}
-                <ConvertArea 
-                    from={abbr1}
-                    to={abbr2}
-                    symbolFrom={symbol1}
-                    symbolTo={symbol2}
-                    amount={num1}
-                />
+                <Text style={{ color: 'grey', fontSize: 20 }} >
+                    {symbol1}
+                    {name1} =</Text>
+                <Text style={{ fontSize: 40, fontWeight: 600 }}>{symbol2} {num2} {name2}</Text>
             </View>
             <View style={{ flex: 1, paddingTop: 5 }}>
                 <Button

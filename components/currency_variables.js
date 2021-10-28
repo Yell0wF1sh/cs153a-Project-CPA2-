@@ -58,6 +58,8 @@ export const currencyInfo = [
 
 ]
 
+export const currencyList = "CNY,USD,JPY"
+
 export const findCurrency = (value) => {
     for (let i = 0; i < currencyInfo.length; i++) {
         if (value == currencyInfo[i].currencyName) {
