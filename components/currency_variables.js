@@ -1,75 +1,66 @@
 export const currencyInfo = [
     {
-        id: 0,
         currencyName: "Chinese Yuan",
         currencySymbol: "￥",
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-        initalState: {
-            asNum1: 1,
-            asNum2: {
-                1: 6.67,
-                2: 0.056,
-            },
-        },
         historyTitle: 'cny',
 
     },
     {
-        id: 1,
         currencyName: "US Dollar",
         currencySymbol: "$",
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg',
-        initalState: {
-            asNum1: 1,
-            asNum2: {
-                0: 0.15,
-                2: 0.009,
-            },
-        },
         historyTitle: 'usd',
     },
     {
-        id: 2,
         currencyName: 'Japanese Yen',
         currencySymbol: '¥',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg',
-        initalState: {
-            asNum1: 1,
-            asNum2: {
-                0: 17.775,
-                1: 110.77,
-            },
-        },
         historyTitle: 'jpy',
     },
     {
-        id: 'Example',
-        currencyName: '',
-        currencySymbol: '',
-        currencyImage: '',
-        initalState: {
-            asNum1: 1,
-            asNum2: {
-
-            },
-        },
-        historyTitle: '',
+        currencyName: 'Euro',
+        currencySymbol: '€',
+        currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg',
+        historyTitle: 'eur',
     },
-
+    {
+        currencyName: 'British Pound',
+        currencySymbol: '£',
+        currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg',
+        historyTitle: 'gbp',
+    },
+    {
+        currencyName: 'South Korean Won',
+        currencySymbol: '₩',
+        currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg',
+        historyTitle: 'krw',
+    },
+    {
+        currencyName: 'Canadian Dollar',
+        currencySymbol: '$',
+        currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg',
+        historyTitle: 'cad',
+    },
+    {
+        currencyName: 'Argentine Peso',
+        currencySymbol: '$',
+        currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg',
+        historyTitle: 'ars',
+    },
+    {
+        currencyName: 'Australian Dollar',
+        currencySymbol: '$',
+        currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg',
+        historyTitle: 'aud',
+    },
+    {
+        currencyName: 'Russian Ruble',
+        currencySymbol: '₽',
+        currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg',
+        historyTitle: 'rub',
+    },
 ]
-
-export const currencyList = "CNY,USD,JPY"
-
-const currencySymbol = () => {
-    fetch('http://data.fixer.io/api/latest?access_key=b16fced1bae2406403f788e14b2ff326&base=' + abbr1.toUpperCase() + '&symbols=' + currencyList)
-        .then((response) => response.json())
-        .then((convertdata) => {
-            setConvertValueList(convertdata)
-            console.log(abbr1.toUpperCase())
-            console.log(convertdata)
-        })
-        .catch((error) => console.error(error))
-}
 
 export const findCurrency = (value) => {
     for (let i = 0; i < currencyInfo.length; i++) {

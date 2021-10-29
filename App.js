@@ -1,105 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Picker } from '@react-native-community/picker'
-import currency_converter_screen from './screens/currency_converter';
 import Tabs from './navigation/bottom_tabs'
 
-// function HomeScreen({ navigation }) {
-//   return (
-//     <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//       <Text>Home Screen</Text>
-//       <Button
-//         title="Chinese Yuan to US Dollar converter"
-//         onPress={() => navigation.navigate('Chinese Yuan to US Dollar converter')}
-//       />
-//       <Button
-//         title="US Dollar to Chinese Yuan converter"
-//         onPress={() => navigation.navigate('US Dollar to Chinese Yuan converter')}
-//       />
-//       <Button
-//         title="Japanese Yen to US Dollar converter"
-//         onPress={() => navigation.navigate('Japanese Yen to US Dollar converter')}
-//       />
-//       <Button
-//         title="US Dollar to Japanese Yen converter"
-//         onPress={() => navigation.navigate('US Dollar to Japanese Yen converter')}
-//       />
-//       </View>
-//   );
-// }
-
 export function HomeScreen({ navigation }) {
-  const [selectedPage, setSelectedPage] = useState("Chinese Yuan to US Dollar converter")
   return (
-    //push origin
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', opacity: 1.0, backgroundColor: 'rgba(255,255,255,.5)' }}>
-        <Text style={{ fontFamily: 'Jazz LET', fontSize: 30, textAlign: 'center', fontWeight: 600 }}>Currency Converter</Text>
-        {/* <Picker
-          selectedValue={selectedPage}
-          style={{ height: 50, width: 200 }}
-          onValueChange={(itemValue) => setSelectedPage(itemValue)}
-        >
-          <Picker.Item label="Chinese Yuan to US Dollar" value="Chinese Yuan to US Dollar converter" />
-          <Picker.Item label="US Dollar to Chinese Yuan" value="US Dollar to Chinese Yuan converter" />
-          <Picker.Item label="Japanese Yen to US Dollar" value="Japanese Yen to US Dollar converter" />
-          <Picker.Item label="US Dollar to Japanese Yen" value="US Dollar to Japanese Yen converter" />
-          <Picker.Item label="Chinese Yuan to Japanese Yen" value="Chinese Yuan to Japanese Yen converter" />
-          <Picker.Item label="Japanese Yen to Chinese Yuan" value="Japanese Yen to Chinese Yuan converter" />
-          <Picker.Item label="Test" value="Currency Converter" />
-        </Picker>
-        <TouchableOpacity
-          style={{ padding: 10 }}
-          onPress={() => navigation.navigate(selectedPage)}
-        >
-          <Image source={{ uri: 'https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-right-arrow-icon-png-image_4231911.jpg' }}
-            style={{ width: 40, height: 40 }}
-          />
-        </TouchableOpacity> */}
-      </View>
+
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', opacity: 1.0, backgroundColor: 'rgba(255,255,255,.5)' }}>
+      <Text style={{ fontFamily: 'Jazz LET', fontSize: 30, textAlign: 'center', fontWeight: 600 }}>Currency Converter</Text>
+    </View>
   )
 }
-
-// const [selectedPage, setSelectedPage] = useState("")
-
-// function HomeScreen({ navigation }) {
-//   useEffect(()=>{
-//     renderView(selectedPage)
-//   },[selectedPage])
-//   const [selectedPage, setSelectedPage] = useState("")
-//   return(
-//   <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//        <Picker
-//       selectedValue={selectedPage}
-//       style={{height: 50, width: 200}}
-//       onValueChange={(itemValue) => setSelectedPage(itemValue)}
-//       >
-//       <Picker.Item label="Chinese Yuan to US Dollar" value="Chinese Yuan to US Dollar converter" />
-//       <Picker.Item label="US Dollar to Chinese Yuan" value="US Dollar to Chinese Yuan converter" />
-//       <Picker.Item label="Japanese Yen to US Dollar" value="Japanese Yen to US Dollar converter" />
-//       <Picker.Item label="US Dollar to Japanese Yen" value="US Dollar to Japanese Yen converter" />
-//       </Picker>
-//   </View>
-//   )}
-
-// function renderView(name) {
-//   if (name == "Chinese Yuan to US Dollar converter") {
-//     <CNYToUSD />
-//   }
-//   if (name == "US Dollar to Chinese Yuan converter") {
-//     <USDToCNY />
-//   }
-//   if (name == "Japanese Yen to US Dollar converter" ) {
-//     <JPYToUSD />
-//   }
-//   if (name == "US Dollar to Japanese Yen converter") {
-//     <USDToJPY />
-//   }
-//   else {
-//     <View></View>
-//   }
-// }
 
 const Stack = createNativeStackNavigator();
 
@@ -107,14 +19,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
-        <Stack.Screen name="Home" component={Tabs} screenOptions />
-        {/* <Stack.Screen name="Chinese Yuan to US Dollar converter" component={cny_to_usd_screen} />
-        <Stack.Screen name="US Dollar to Chinese Yuan converter" component={usd_to_cny_screen} />
-        <Stack.Screen name="Japanese Yen to US Dollar converter" component={jpy_to_usd_screen} />
-        <Stack.Screen name="US Dollar to Japanese Yen converter" component={usd_to_jpy_screen} />
-        <Stack.Screen name="Chinese Yuan to Japanese Yen converter" component={cny_to_jpy_screen} />
-        <Stack.Screen name="Japanese Yen to Chinese Yuan converter" component={jpy_to_cny_screen} /> */}
-        <Stack.Screen name="Currency Converter" component={currency_converter_screen} />
+        <Stack.Screen name="Home" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
