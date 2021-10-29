@@ -4,6 +4,7 @@ import { createBottomTabNavigator, BottomTabBar, } from '@react-navigation/botto
 // import LinearGradient from 'react-native-linear-gradient';
 
 import currency_converter_screen from '../screens/currency_converter.js'
+import about_screen from '../screens/about.js';
 import currency_converter_history_screen from '../screens/currency_converter_history.js';
 import { HomeScreen } from '../App.js'
 import test_screen from '../screens/test.js';
@@ -71,7 +72,7 @@ const Tabs = () => {
                     )
                 }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Test"
                 component={test_screen}
                 options={{
@@ -111,6 +112,28 @@ const Tabs = () => {
                             <Text
                                 style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 600 }}
                             >HISTORY</Text>
+                        </View>
+                    )
+                }}
+            /> */}
+            <Tab.Screen
+                name="About"
+                component={about_screen}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                source={require('../assets/info.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 30,
+                                    height: 30,
+                                    tintColor: focused ? '#52d8f2' : 'black',
+                                }}
+                            />
+                            <Text
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 600 }}
+                            >ABOUT</Text>
                         </View>
                     )
                 }}
