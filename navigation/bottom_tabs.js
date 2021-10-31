@@ -44,7 +44,7 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 600 }}
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
                             >HOME</Text>
                         </View>
                     )
@@ -66,7 +66,7 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 600 }}
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
                             >CONVERTER</Text>
                         </View>
                     )
@@ -88,12 +88,12 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 600 }}
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: bold }}
                             >TEST</Text>
                         </View>
                     )
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="History"
                 component={currency_converter_history_screen}
@@ -110,12 +110,12 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 600 }}
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
                             >HISTORY</Text>
                         </View>
                     )
                 }}
-            /> */}
+            />
             <Tab.Screen
                 name="About"
                 component={about_screen}
@@ -132,7 +132,7 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 600 }}
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
                             >ABOUT</Text>
                         </View>
                     )

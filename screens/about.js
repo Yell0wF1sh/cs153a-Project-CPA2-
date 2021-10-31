@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     text_header: {
         textAlign: 'center',
         fontSize: 32,
-        fontWeight: 600,
+        fontWeight: "bold",
     },
     text_regular: {
         textAlign: 'center',

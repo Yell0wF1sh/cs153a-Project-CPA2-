@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,17 +11,29 @@ function currency_converter_history_screen({ navigation }) {
     )
 }
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout))
+}
+
 const CurrencyConvertorHistory = () => {
     const [history, setHistory] = useState([])
+    const [refreshing, setRefreshing] = useState(false)
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            padding: 10,
+            paddingHorizontal: 10,
+            paddingTop: 30,
         },
     })
 
     useEffect(() => {
         getData()
+    }, [])
+
+    const onRefresh = useCallback(() => {
+        getData()
+        setRefreshing(true)
+        wait(200).then(() => setRefreshing(false))
     }, [])
 
     const getData = async () => {
@@ -49,17 +61,27 @@ const CurrencyConvertorHistory = () => {
 
     const renderHistory = ({ item }) => {
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 2 }}>
-                <Text style={{ fontSize: 16, backgroundColor: 'lightgreen', width: 100, textAlign: 'center' }}>{item.symbol1} {item.amountFrom}</Text>
-                <Text style={{ fontSize: 16, textAlign: 'center' }}>➔</Text>
-                <Text style={{ fontSize: 16, backgroundColor: 'pink', width: 100, textAlign: 'center' }}>{item.symbol2} {item.amountTo}</Text>
+            <View style={{ flex: 1, flexDirection: 'row', padding: 2 }}>
+                <View style={{ flex: 3 }}><Text style={{ fontSize: 20, backgroundColor: 'lightgreen', textAlign: 'center' }}>{item.symbol1} {item.abbr1} {item.amountFrom}</Text></View>
+                <View style={{ flex: 1 }}><Text style={{ fontSize: 20, textAlign: 'center' }}>➔</Text></View>
+                <View style={{ flex: 3 }}><Text style={{ fontSize: 20, backgroundColor: 'pink', textAlign: 'center' }}>{item.symbol2} {item.abbr2} {item.amountTo}</Text></View>
             </View>
         )
     }
 
     return (
-        <View style={styles.container}>
-            <ScrollView>
+        <SafeAreaView style={styles.container}>
+            <View style={{ borderBottomWidth: 1, borderBottomColor: 'grey', paddingBottom: 3 }}>
+                <Text style={{ fontSize: 40 }}>History</Text>
+            </View>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 <FlatList
                     data={history}
                     renderItem={renderHistory}
@@ -76,7 +98,7 @@ const CurrencyConvertorHistory = () => {
                     }
                 />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 

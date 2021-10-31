@@ -3,62 +3,62 @@ export const currencyInfo = [
         currencyName: "Chinese Yuan",
         currencySymbol: "￥",
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-        historyTitle: 'cny',
+        historyTitle: 'CNY',
 
     },
     {
         currencyName: "US Dollar",
         currencySymbol: "$",
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg',
-        historyTitle: 'usd',
+        historyTitle: 'USD',
     },
     {
         currencyName: 'Japanese Yen',
         currencySymbol: '¥',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg',
-        historyTitle: 'jpy',
+        historyTitle: 'JPY',
     },
     {
         currencyName: 'Euro',
         currencySymbol: '€',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg',
-        historyTitle: 'eur',
+        historyTitle: 'EUR',
     },
     {
         currencyName: 'British Pound',
         currencySymbol: '£',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg',
-        historyTitle: 'gbp',
+        historyTitle: 'GBP',
     },
     {
         currencyName: 'South Korean Won',
         currencySymbol: '₩',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg',
-        historyTitle: 'krw',
+        historyTitle: 'KRW',
     },
     {
         currencyName: 'Canadian Dollar',
         currencySymbol: '$',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg',
-        historyTitle: 'cad',
+        historyTitle: 'CAD',
     },
     {
         currencyName: 'Argentine Peso',
         currencySymbol: '$',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg',
-        historyTitle: 'ars',
+        historyTitle: 'ARS',
     },
     {
         currencyName: 'Australian Dollar',
         currencySymbol: '$',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg',
-        historyTitle: 'aud',
+        historyTitle: 'AUD',
     },
     {
         currencyName: 'Russian Ruble',
         currencySymbol: '₽',
         currencyImage: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg',
-        historyTitle: 'rub',
+        historyTitle: 'RUB',
     },
 ]
 
@@ -68,4 +68,9 @@ export const findCurrency = (value) => {
             return i
         }
     }
+}
+
+export const convertDateTenDaysAhead = (value) => {
+    const temp = value.slice(0, 8)
+    return temp + (value.slice(8, 10) - 10)
 }

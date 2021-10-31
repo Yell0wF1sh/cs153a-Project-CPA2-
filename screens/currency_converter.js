@@ -4,6 +4,7 @@ import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo, findCurrency, currencyList } from '../components/currency_variables'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LineChart } from 'react-native-chart-kit';
 
 
 function currency_converter_screen({ navigation }) {
@@ -19,12 +20,12 @@ const CurrencyConvertor = () => {
     const [num2, setNum2] = useState(17.785563)
     const [name1, setName1] = useState("Chinese Yuan")
     const [name2, setName2] = useState("Japanese Yen")
-    const [abbr1, setAbbr1] = useState("cny")
-    const [abbr2, setAbbr2] = useState("jpy")
+    const [abbr1, setAbbr1] = useState("CNY")
+    const [abbr2, setAbbr2] = useState("JPY")
     const [symbol1, setSymbol1] = useState("￥")
     const [symbol2, setSymbol2] = useState("¥")
     const [history, setHistory] = useState([])
-    const [viewingHis, setViewingHis] = useState(false)
+    // const [viewingHis, setViewingHis] = useState(false)
     const [tempValue, setTempValue] = useState(NaN)
 
     const styles = StyleSheet.create({
@@ -40,6 +41,7 @@ const CurrencyConvertor = () => {
             // alignItems: 'center',
             backgroundColor: 'white',
             borderRadius: 10,
+            padding: 5,
         },
         box1: {
             flex: 1,
@@ -80,6 +82,7 @@ const CurrencyConvertor = () => {
                 setNum2(convertdata["result"])
             })
             .catch((error) => console.error(error))
+        fetch('https://data.fixer.io/api/timeseries?access_key=b16fced1bae2406403f788e14b2ff326&start_date=2012-05-01&end_date=2012-05-25&base=' + '&symbols=')
     }, [abbr1, abbr2, num1])
 
     useEffect(() => {
@@ -87,8 +90,8 @@ const CurrencyConvertor = () => {
             {
                 'amountFrom': num1,
                 'amountTo': num2,
-                'name1': name1,
-                'name2': name2,
+                'abbr1': abbr1,
+                'abbr2': abbr2,
                 'symbol1': symbol1,
                 'symbol2': symbol2,
                 'time': Date.now(),
@@ -141,27 +144,27 @@ const CurrencyConvertor = () => {
         )
     }
 
-    let historyView = (<View></View>)
+    // let historyView = (<View></View>)
 
-    if (viewingHis) {
+    // if (viewingHis) {
 
-        historyView =
-            <View>
-                <FlatList
-                    data={history.slice(0, 5)}
-                    renderItem={renderHistory}
-                />
-                <Button
-                    title='Clear History'
-                    color='#d32f2f'
-                    onPress={() => {
-                        clearHistory()
-                        setHistory([])
-                    }
-                    }
-                />
-            </View>
-    }
+    //     historyView =
+    //         <View>
+    //             <FlatList
+    //                 data={history.slice(0, 5)}
+    //                 renderItem={renderHistory}
+    //             />
+    //             <Button
+    //                 title='Clear History'
+    //                 color='#d32f2f'
+    //                 onPress={() => {
+    //                     clearHistory()
+    //                     setHistory([])
+    //                 }
+    //                 }
+    //             />
+    //         </View>
+    // }
 
 
     return (
@@ -169,14 +172,15 @@ const CurrencyConvertor = () => {
         <KeyboardAvoidingView style={styles.container} >
             <SafeAreaView style={{ height: '100%', width: '100%' }}>
                 <View style={styles.convert_area}>
-                    <Text style={{ color: 'grey', fontSize: 20 }}>{symbol1} {num1} {name1} =</Text>
-                    <Text style={{ fontSize: 40, fontWeight: 600 }}>{symbol2} {num2} {name2}</Text>
+                    <Text style={{ color: 'grey', fontSize: 25, flexWrap: 'wrap' }}>{symbol1} {num1} {name1} =</Text>
+                    <Text style={{ fontSize: 45, fontWeight: "bold" }}>{symbol2} {num2}</Text>
+                    <Text style={{ fontSize: 45, fontWeight: "bold" }}>{name2}</Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 10 }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Picker
                             selectedValue={name1}
-                            style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 20, borderRadius: 10, width: '90%' }}
+                            style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 25, borderRadius: 10, width: '50%' }}
                             onValueChange={(itemValue) => {
                                 setName1(itemValue)
                             }}
@@ -193,11 +197,11 @@ const CurrencyConvertor = () => {
                             <Picker.Item label={currencyInfo[9]["currencyName"]} value={currencyInfo[9]["currencyName"]} />
                         </Picker>
 
-                        <Text style={{ fontSize: 20, paddingHorizontal: 5 }}>⇄</Text>
+                        <Text style={{ fontSize: 20, }}>⇄</Text>
 
                         <Picker
                             selectedValue={name2}
-                            style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 20, borderRadius: 10, width: '90%' }}
+                            style={{ borderBottomWidth: 2, borderColor: 'lightgrey', fontSize: 25, borderRadius: 10, width: '50%' }}
                             onValueChange={(itemValue) => {
                                 setName2(itemValue)
                             }}
@@ -236,14 +240,15 @@ const CurrencyConvertor = () => {
                         }}
                     />
                 </View>
-                <View style={{ flex: 4 }}>
+                {/* <View style={{ flex: 4 }}>
                     <Button
                         title='Toggle history'
                         color='#0054db'
                         onPress={() => { setViewingHis(!viewingHis) }}
                     />
                     {historyView}
-                </View>
+                </View> */}
+                <View style={{ flex: 4 }}></View>
             </SafeAreaView>
         </KeyboardAvoidingView >
     )
