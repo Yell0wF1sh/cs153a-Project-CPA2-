@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView, } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView, Dimensions, } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo, findCurrency, currencyList } from '../components/currency_variables'
@@ -26,6 +26,9 @@ const CurrencyConvertor = () => {
     const [symbol2, setSymbol2] = useState("¥")
     const [history, setHistory] = useState([])
     // const [viewingHis, setViewingHis] = useState(false)
+    const [dateNow, setDateNow] = useState("2021-10-31")
+    const [dateBefore, setDateBefore] = useState("2021-10-21")
+    const [historicalValueList, setHistoricalValueList] = useState([])
     const [tempValue, setTempValue] = useState(NaN)
 
     const styles = StyleSheet.create({
@@ -76,13 +79,20 @@ const CurrencyConvertor = () => {
     }, [name2])
 
     useEffect(() => {
-        fetch('http://data.fixer.io/api/convert?access_key=b16fced1bae2406403f788e14b2ff326&from=' + abbr1.toUpperCase() + '&to=' + abbr2.toUpperCase() + '&amount=' + num1)
+        fetch('http://data.fixer.io/api/convert?access_key=b16fced1bae2406403f788e14b2ff326&from='
+            + abbr1.toUpperCase() + '&to=' + abbr2.toUpperCase() + '&amount=' + num1)
             .then((response) => response.json())
             .then((convertdata) => {
                 setNum2(convertdata["result"])
             })
             .catch((error) => console.error(error))
-        fetch('https://data.fixer.io/api/timeseries?access_key=b16fced1bae2406403f788e14b2ff326&start_date=2012-05-01&end_date=2012-05-25&base=' + '&symbols=')
+        // fetch('https://data.fixer.io/api/timeseries?access_key=b16fced1bae2406403f788e14b2ff326&start_date='
+        //     + dateBefore + '&end_date=' + dateNow + '&base=' + abbr1 + '&symbols=' + abbr2)
+        //     .then((response) => response.json())
+        //     .then((historyData) => {
+        //         console.log(historyData)
+        //         setHistoricalValueList(historyData["rates"])
+        //     })
     }, [abbr1, abbr2, num1])
 
     useEffect(() => {
@@ -248,7 +258,38 @@ const CurrencyConvertor = () => {
                     />
                     {historyView}
                 </View> */}
-                <View style={{ flex: 4 }}></View>
+                <View style={{ flex: 4 }}>
+                    {/* <LineChart
+                        data={{
+                            labels: Object.keys(historicalValueList),
+                            datasets: Object.values(historicalValueList)
+                        }}
+                        width={Dimensions.get("window").width}
+                        height={100}
+                        yAxisLabel={symbol2}
+                        chartConfig={{
+                            backgroundColor: "#e26a00",
+                            backgroundGradientFrom: "#fb8c00",
+                            backgroundGradientTo: "#ffa726",
+                            decimalPlaces: 2, // optional, defaults to 2dp
+                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                            style: {
+                                borderRadius: 16
+                            },
+                            propsForDots: {
+                                r: "6",
+                                strokeWidth: "2",
+                                stroke: "#ffa726"
+                            }
+                        }}
+                        bezier
+                        style={{
+                            marginVertical: 8,
+                            borderRadius: 16
+                        }}
+                    /> */}
+                </View>
             </SafeAreaView>
         </KeyboardAvoidingView >
     )

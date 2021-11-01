@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 const About = () => {
     return (
         <ScrollView style={{ height: '100%', weight: '100%', flex: 1 }}>
-            <View style={{ flex: 1, justifyContent: 'space-between', padding: 10 }}>
+            <View style={{ flex: 1, justifyContent: 'space-between', padding: 10, }}>
                 <View style={styles.container}>
                     <Text style={styles.text_header}>
                         This app is a currency converter
