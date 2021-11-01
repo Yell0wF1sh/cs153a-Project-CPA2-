@@ -4,7 +4,7 @@ import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo, findCurrency, currencyList } from '../components/currency_variables'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LineChart } from 'react-native-chart-kit';
+// import { LineChart } from 'react-native-chart-kit';
 
 
 function currency_converter_screen({ navigation }) {
