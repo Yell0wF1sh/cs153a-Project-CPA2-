@@ -7,6 +7,7 @@ import currency_converter_screen from '../screens/currency_converter.js'
 import about_screen from '../screens/about.js';
 import currency_converter_history_screen from '../screens/currency_converter_history.js';
 import { HomeScreen } from '../App.js'
+import convert_game_screen from '../screens/convert_game.js';
 import test_screen from '../screens/test.js';
 
 const Tab = createBottomTabNavigator()
@@ -134,6 +135,28 @@ const Tabs = () => {
                             <Text
                                 style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
                             >ABOUT</Text>
+                        </View>
+                    )
+                }}
+            />
+            <Tab.Screen
+                name="Game"
+                component={convert_game_screen}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                source={require('../assets/interchange.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 30,
+                                    height: 30,
+                                    tintColor: focused ? '#52d8f2' : 'black',
+                                }}
+                            />
+                            <Text
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: 'bold' }}
+                            >GAME</Text>
                         </View>
                     )
                 }}
