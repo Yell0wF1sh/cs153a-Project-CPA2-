@@ -4,7 +4,9 @@ import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo } from '../components/currency_variables';
 import moment from 'moment';
+import { CurrencyCard } from './component_templates'
 import { currencyList } from '../components/currency_variables';
+import ValueProvider, { useValue } from '../components/value_context';
 // import { Card } from "@paraboly/react-native-card";
 
 function convert_game_screen({ navigation }) {
@@ -16,20 +18,13 @@ function convert_game_screen({ navigation }) {
 }
 
 const ConvertGame = () => {
-    const [playerId, setPlayerId] = useState("")
+    const [playerId, setPlayerId] = useState("Steve")
     const [currencyNow, setCurrencyNow] = useState(currencyInfo[0]["currencyName"])
 
     const [currentTime, setCurrenctTime] = useState(moment().format())
     const [changeTimes, setChangeTimes] = useState(0)
     const [profile, setProfile] = useState([])
     const styles = StyleSheet.create({
-        cards: {
-            flex: 1,
-            width: '50%',
-            borderRadius: 15,
-            backgroundColor: 'pink',
-            padding: 5,
-        },
         text: {
             fontSize: 18,
         }
@@ -110,78 +105,63 @@ const ConvertGame = () => {
 
 
     return (
-        <View>
-            {/* {firstTimeView} */}
-            {/* 欢迎 */}
-            <View>
-
-            </View>
-            {/* 统计栏 */}
-            <View>
-                
-            </View>
-            {/* 货币选项卡（一行两个，带转换按钮） */}
+        <ValueProvider data={profile}>
+            {/* 做一个按照convert变化数字的显示区域就好 */}
             <View style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={styles.cards}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.text}>{currencyInfo[0]["currencyName"]} {currencyInfo[0]["currencySymbol"]}</Text>
-                            <Text style={styles.text, { color: 'red' }}>
-                                ⇧ +0.01%
-                            </Text>
-                        </View>
-                        <Button
-                            title='SWITCH CURRENCY'
-                            color='#009dd6'
-                            onPress={() => { }}
-                        />
-                    </View>
-                    <View style={styles.cards}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.text}>{currencyInfo[1]["currencyName"]} {currencyInfo[1]["currencySymbol"]}</Text>
-                            <Text style={styles.text, { color: 'green' }}>
-                                ⇧ +0.01%
-                            </Text>
-                        </View>
-                        <Button
-                            title='SWITCH CURRENCY'
-                            color='#009dd6'
-                            onPress={() => { }}
-                        />
-                    </View>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={styles.cards}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.text}>{currencyInfo[2]["currencyName"]} {currencyInfo[2]["currencySymbol"]}</Text>
-                            <Text style={styles.text, { color: 'lightgrey' }}>
-                                ⇧ +0.01%
-                            </Text>
-                        </View>
-                        <Button
-                            title='SWITCH CURRENCY'
-                            color='#009dd6'
-                            onPress={() => { }}
-                        />
-                    </View>
-                    <View style={styles.cards}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.text}>{currencyInfo[3]["currencyName"]} {currencyInfo[3]["currencySymbol"]}</Text>
-                            <Text style={styles.text, { color: 'red' }}>
-                                ⇧ +0.01%
-                            </Text>
-                        </View>
-                        <Button
-                            title='SWITCH CURRENCY'
-                            color='#009dd6'
-                            onPress={() => { }}
-                        />
-                    </View>
-                </View>
+                <CardView />
             </View>
 
-        </View>
+        </ValueProvider>
     )
+}
+
+const CardView = () => {
+    <View style={{ flex: 1, flexDirection: 'row' }}>
+        <CurrencyCard
+            currencyText={currencyInfo[0]["currencyName"] + " " + currencyInfo[0]["currencySymbol"]}
+            percentChange='+0.01%'
+            isIncrease="true"
+        >
+            <Button
+                title='SWITCH CURRENCY'
+                color='#009dd6'
+                onPress={() => { }}
+            />
+        </CurrencyCard>
+        <CurrencyCard
+            currencyText={currencyInfo[1]["currencyName"] + " " + currencyInfo[1]["currencySymbol"]}
+            percentChange='-0.01%'
+            isIncrease="false"
+        >
+            <Button
+                title='SWITCH CURRENCY'
+                color='#009dd6'
+                onPress={() => { }}
+            />
+        </CurrencyCard>
+        <CurrencyCard
+            currencyText={currencyInfo[2]["currencyName"] + " " + currencyInfo[2]["currencySymbol"]}
+            percentChange='+0%'
+            isIncrease="true"
+        >
+            <Button
+                title='SWITCH CURRENCY'
+                color='#009dd6'
+                onPress={() => { }}
+            />
+        </CurrencyCard>
+        <CurrencyCard
+            currencyText={currencyInfo[3]["currencyName"] + " " + currencyInfo[3]["currencySymbol"]}
+            percentChange='+1.00%'
+            isIncrease="true"
+        >
+            <Button
+                title='SWITCH CURRENCY'
+                color='#009dd6'
+                onPress={() => { }}
+            />
+        </CurrencyCard>
+    </View>
 }
 
 export default convert_game_screen

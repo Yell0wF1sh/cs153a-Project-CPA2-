@@ -25,7 +25,6 @@ const CurrencyConvertor = () => {
     const [symbol1, setSymbol1] = useState("￥")
     const [symbol2, setSymbol2] = useState("¥")
     const [history, setHistory] = useState([])
-    // const [viewingHis, setViewingHis] = useState(false)
     const [dateNow, setDateNow] = useState("2021-10-31")
     const [dateBefore, setDateBefore] = useState("2021-10-21")
     const [historicalValueList, setHistoricalValueList] = useState([])
@@ -86,13 +85,6 @@ const CurrencyConvertor = () => {
                 setNum2(convertdata["result"])
             })
             .catch((error) => console.error(error))
-        // fetch('https://data.fixer.io/api/timeseries?access_key=b16fced1bae2406403f788e14b2ff326&start_date='
-        //     + dateBefore + '&end_date=' + dateNow + '&base=' + abbr1 + '&symbols=' + abbr2)
-        //     .then((response) => response.json())
-        //     .then((historyData) => {
-        //         console.log(historyData)
-        //         setHistoricalValueList(historyData["rates"])
-        //     })
     }, [abbr1, abbr2, num1])
 
     useEffect(() => {
@@ -153,28 +145,6 @@ const CurrencyConvertor = () => {
             </View>
         )
     }
-
-    // let historyView = (<View></View>)
-
-    // if (viewingHis) {
-
-    //     historyView =
-    //         <View>
-    //             <FlatList
-    //                 data={history.slice(0, 5)}
-    //                 renderItem={renderHistory}
-    //             />
-    //             <Button
-    //                 title='Clear History'
-    //                 color='#d32f2f'
-    //                 onPress={() => {
-    //                     clearHistory()
-    //                     setHistory([])
-    //                 }
-    //                 }
-    //             />
-    //         </View>
-    // }
 
 
     return (
@@ -249,46 +219,6 @@ const CurrencyConvertor = () => {
                             setNum1(tempValue)
                         }}
                     />
-                </View>
-                {/* <View style={{ flex: 4 }}>
-                    <Button
-                        title='Toggle history'
-                        color='#0054db'
-                        onPress={() => { setViewingHis(!viewingHis) }}
-                    />
-                    {historyView}
-                </View> */}
-                <View style={{ flex: 4 }}>
-                    {/* <LineChart
-                        data={{
-                            labels: Object.keys(historicalValueList),
-                            datasets: Object.values(historicalValueList)
-                        }}
-                        width={Dimensions.get("window").width}
-                        height={100}
-                        yAxisLabel={symbol2}
-                        chartConfig={{
-                            backgroundColor: "#e26a00",
-                            backgroundGradientFrom: "#fb8c00",
-                            backgroundGradientTo: "#ffa726",
-                            decimalPlaces: 2, // optional, defaults to 2dp
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-                            },
-                            propsForDots: {
-                                r: "6",
-                                strokeWidth: "2",
-                                stroke: "#ffa726"
-                            }
-                        }}
-                        bezier
-                        style={{
-                            marginVertical: 8,
-                            borderRadius: 16
-                        }}
-                    /> */}
                 </View>
             </SafeAreaView>
         </KeyboardAvoidingView >

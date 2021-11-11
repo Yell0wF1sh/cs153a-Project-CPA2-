@@ -8,30 +8,30 @@ export const percentageDiff = (name) => {
 
   useEffect(() => {
 
-  },[])
+  }, [])
 
-  let diff = Math.round( x * 1000)/1000 + "%"
+  let diff = Math.round(x * 1000) / 1000 + "%"
   let stringDiff = (<Text></Text>)
   if (numFrom < numTo) {
-    stringDiff = 
-      <Text style={{color: 'red'}}>
+    stringDiff =
+      <Text style={{ color: 'red' }}>
         ⇧ +{diff}%
       </Text>
   }
   else if (numFrom == numTo) {
     stringDiff =
-      <Text style={{color: 'lightgrey'}}>
+      <Text style={{ color: 'lightgrey' }}>
         +0%
       </Text>
   }
   else {
-    stringDiff = 
-      <Text style={{color: 'limegreen'}}>
+    stringDiff =
+      <Text style={{ color: 'limegreen' }}>
         ⇩ -{diff}%
       </Text>
   }
-  
-  return(stringDiff)
+
+  return (stringDiff)
 }
 
 
