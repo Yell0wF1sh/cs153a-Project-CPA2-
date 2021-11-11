@@ -20,10 +20,11 @@ function convert_game_screen({ navigation }) {
 const ConvertGame = () => {
     const [playerId, setPlayerId] = useState("Steve")
     const [currencyNow, setCurrencyNow] = useState(currencyInfo[0]["currencyName"])
-
+    const [currencyAmount, setCurrencyAmount] = useState(100)
     const [currentTime, setCurrenctTime] = useState(moment().format())
     const [changeTimes, setChangeTimes] = useState(0)
     const [profile, setProfile] = useState([])
+    const [currencyModified, setCurrencyModified] = useState(0)
     const styles = StyleSheet.create({
         text: {
             fontSize: 18,
@@ -44,13 +45,18 @@ const ConvertGame = () => {
         const newProfile = profile.concat(
             {
                 'currency': currencyNow,
+                'currency amount': currencyAmount,
                 'date': currentTime,
-                'change times': changeTimes
+                'operation times': changeTimes
             }
         )
         setProfile(newProfile)
         storeData(newProfile)
     }, [changeTimes])
+
+    useEffect(() => {
+        setCurrencyAmount()
+    },[currencyNow])
 
     const getData = async () => {
         try {
@@ -108,6 +114,7 @@ const ConvertGame = () => {
         <ValueProvider data={profile}>
             {/* 做一个按照convert变化数字的显示区域就好 */}
             <View style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
+                <AmountView />
                 <CardView />
             </View>
 
@@ -115,50 +122,73 @@ const ConvertGame = () => {
     )
 }
 
+const AmountView = (currencyNow, currencyConverted) => {
+    return(
+        <View style={styles.convert_area}>
+            <Text style={{ color: 'grey', fontSize: 25, flexWrap: 'wrap' }}>You started with $100</Text>
+            <Text style={{ fontSize: 45, fontWeight: "bold" }}>Now you own {currencyAmount} {currencyNow}</Text>
+            <Text style={{ fontSize: 45, fontWeight: "bold" }}>which is {currencyModified}</Text>
+            <Text>Your saving decreased/increased by {}</Text>
+        </View>
+    )
+}
+
+function currencyText(num) {
+    return currencyInfo[num]["currencyName"] + " " + currencyInfo[num]["currencySymbol"]
+}
+
 const CardView = () => {
     <View style={{ flex: 1, flexDirection: 'row' }}>
         <CurrencyCard
-            currencyText={currencyInfo[0]["currencyName"] + " " + currencyInfo[0]["currencySymbol"]}
+            currencyText={currencyText(0)}
             percentChange='+0.01%'
             isIncrease="true"
         >
             <Button
                 title='SWITCH CURRENCY'
                 color='#009dd6'
-                onPress={() => { }}
+                onPress={() => {
+                    setCurrencyNow(currencyText(0))
+                 }}
             />
         </CurrencyCard>
         <CurrencyCard
-            currencyText={currencyInfo[1]["currencyName"] + " " + currencyInfo[1]["currencySymbol"]}
+            currencyText={currencyText(1)}
             percentChange='-0.01%'
             isIncrease="false"
         >
             <Button
                 title='SWITCH CURRENCY'
                 color='#009dd6'
-                onPress={() => { }}
+                onPress={() => {
+                    setCurrencyNow(currencyText(1))
+                 }}
             />
         </CurrencyCard>
         <CurrencyCard
-            currencyText={currencyInfo[2]["currencyName"] + " " + currencyInfo[2]["currencySymbol"]}
+            currencyText={currencyText(2)}
             percentChange='+0%'
             isIncrease="true"
         >
             <Button
                 title='SWITCH CURRENCY'
                 color='#009dd6'
-                onPress={() => { }}
+                onPress={() => {
+                    setCurrencyNow(currencyText(2))
+                 }}
             />
         </CurrencyCard>
         <CurrencyCard
-            currencyText={currencyInfo[3]["currencyName"] + " " + currencyInfo[3]["currencySymbol"]}
+            currencyText={currencyText(3)}
             percentChange='+1.00%'
             isIncrease="true"
         >
             <Button
                 title='SWITCH CURRENCY'
                 color='#009dd6'
-                onPress={() => { }}
+                onPress={() => {
+                    setCurrencyNow(currencyText(3))
+                 }}
             />
         </CurrencyCard>
     </View>
