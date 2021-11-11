@@ -8,6 +8,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@freakycoder/react-native-bounceable": "^0.2.5",
+    "@paraboly/pwc-simple-card": "^0.0.1",
+    "@paraboly/react-native-card": "^1.0.3",
     "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/picker": "^1.8.1",
     "@react-navigation/bottom-tabs": "^6.0.9",
@@ -24,10 +27,12 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-chart-kit": "^6.11.0",
     "react-native-create-thumbnail": "^1.4.1",
+    "react-native-dynamic-vector-icons": "^1.1.6",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-splash-screen": "^3.2.0",
+    "react-native-vector-icons": "^9.0.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
