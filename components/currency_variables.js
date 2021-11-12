@@ -72,6 +72,14 @@ export const findCurrency = (value) => {
     }
 }
 
+export function currencyName(num) {
+    return currencyInfo[num]["currencyName"]
+}
+
+export function currencyAbbr(num) {
+    return currencyInfo[num]["historyTitle"]
+}
+
 export const convertDateTenDaysAhead = (value) => {
     const temp = value.slice(0, 8)
     return temp + (value.slice(8, 10) - 10)

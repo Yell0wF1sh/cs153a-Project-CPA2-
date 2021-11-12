@@ -4,6 +4,7 @@ import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo, findCurrency, currencyList } from '../components/currency_variables'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { currencyName } from '../components/currency_variables';
 // import { LineChart } from 'react-native-chart-kit';
 
 
@@ -165,16 +166,16 @@ const CurrencyConvertor = () => {
                                 setName1(itemValue)
                             }}
                         >
-                            <Picker.Item label={currencyInfo[0]["currencyName"]} value={currencyInfo[0]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[1]["currencyName"]} value={currencyInfo[1]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[2]["currencyName"]} value={currencyInfo[2]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[3]["currencyName"]} value={currencyInfo[3]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[4]["currencyName"]} value={currencyInfo[4]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[5]["currencyName"]} value={currencyInfo[5]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[6]["currencyName"]} value={currencyInfo[6]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[7]["currencyName"]} value={currencyInfo[7]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[8]["currencyName"]} value={currencyInfo[8]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[9]["currencyName"]} value={currencyInfo[9]["currencyName"]} />
+                            <Picker.Item label={currencyName(0)} value={currencyName(0)} />
+                            <Picker.Item label={currencyName(1)} value={currencyName(1)} />
+                            <Picker.Item label={currencyName(2)} value={currencyName(2)} />
+                            <Picker.Item label={currencyName(3)} value={currencyName(3)} />
+                            <Picker.Item label={currencyName(4)} value={currencyName(4)} />
+                            <Picker.Item label={currencyName(5)} value={currencyName(5)} />
+                            <Picker.Item label={currencyName(6)} value={currencyName(6)} />
+                            <Picker.Item label={currencyName(7)} value={currencyName(7)} />
+                            <Picker.Item label={currencyName(8)} value={currencyName(8)} />
+                            <Picker.Item label={currencyName(9)} value={currencyName(9)} />
                         </Picker>
 
                         <Text style={{ fontSize: 20, }}>⇄</Text>
@@ -186,16 +187,16 @@ const CurrencyConvertor = () => {
                                 setName2(itemValue)
                             }}
                         >
-                            <Picker.Item label={currencyInfo[0]["currencyName"]} value={currencyInfo[0]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[1]["currencyName"]} value={currencyInfo[1]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[2]["currencyName"]} value={currencyInfo[2]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[3]["currencyName"]} value={currencyInfo[3]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[4]["currencyName"]} value={currencyInfo[4]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[5]["currencyName"]} value={currencyInfo[5]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[6]["currencyName"]} value={currencyInfo[6]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[7]["currencyName"]} value={currencyInfo[7]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[8]["currencyName"]} value={currencyInfo[8]["currencyName"]} />
-                            <Picker.Item label={currencyInfo[9]["currencyName"]} value={currencyInfo[9]["currencyName"]} />
+                            <Picker.Item label={currencyName(0)} value={currencyName(0)} />
+                            <Picker.Item label={currencyName(1)} value={currencyName(1)} />
+                            <Picker.Item label={currencyName(2)} value={currencyName(2)} />
+                            <Picker.Item label={currencyName(3)} value={currencyName(3)} />
+                            <Picker.Item label={currencyName(4)} value={currencyName(4)} />
+                            <Picker.Item label={currencyName(5)} value={currencyName(5)} />
+                            <Picker.Item label={currencyName(6)} value={currencyName(6)} />
+                            <Picker.Item label={currencyName(7)} value={currencyName(7)} />
+                            <Picker.Item label={currencyName(8)} value={currencyName(8)} />
+                            <Picker.Item label={currencyName(9)} value={currencyName(9)} />
                         </Picker>
                     </View>
                     <TextInput
@@ -220,6 +221,7 @@ const CurrencyConvertor = () => {
                         }}
                     />
                 </View>
+                <View style={{ flex: 2 }}></View>
             </SafeAreaView>
         </KeyboardAvoidingView >
     )
