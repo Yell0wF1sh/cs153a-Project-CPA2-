@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+const appURL = 'https://converter-game.herokuapp.com/https://example.com'
+
+async function add() {
+    try {
+        await axios.post(appURL + '/testPost')
+    } catch (e) {
+        console.log(e)
+    }
+}
 
 export default function test_screen() {
     const [a1, setA1] = useState("")
@@ -67,6 +78,12 @@ export default function test_screen() {
             />
             <Text>{amount1}{a1}</Text>
             <Text>{amount2}{a2}</Text>
+            <Button
+                title='add'
+                onPress={() => {
+                    add()
+                }}
+            />
         </View>
     )
 }

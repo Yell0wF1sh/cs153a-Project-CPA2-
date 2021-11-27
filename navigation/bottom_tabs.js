@@ -73,7 +73,7 @@ const Tabs = () => {
                     )
                 }}
             />
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="Test"
                 component={test_screen}
                 options={{
@@ -89,12 +89,12 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: bold }}
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
                             >TEST</Text>
                         </View>
                     )
                 }}
-            /> */}
+            />
             <Tab.Screen
                 name="History"
                 component={currency_converter_history_screen}
