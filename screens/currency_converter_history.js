@@ -2,12 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DefaultLayout } from '../components/screen_layout';
 
 function currency_converter_history_screen({ navigation }) {
     return (
-        <View style={{ height: "92%", weight: '100%' }}>
+        <DefaultLayout>
             <CurrencyConvertorHistory />
-        </View>
+        </DefaultLayout>
     )
 }
 

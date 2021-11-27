@@ -6,13 +6,14 @@ import moment from 'moment';
 import { CurrencyCard } from '../components/component_templates'
 import { currencyList } from '../components/currency_variables';
 import { currencyName, currencyAbbr } from '../components/currency_variables';
+import { DefaultLayout } from '../components/screen_layout';
 import ValueProvider, { useValue } from '../components/value_context';
 
 function convert_game_screen({ navigation }) {
     return (
-        <View style={{ height: "92%", weight: '100%' }}>
+        <DefaultLayout>
             <ConvertGame />
-        </View>
+        </DefaultLayout>
     )
 }
 

@@ -5,14 +5,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo, findCurrency, currencyList } from '../components/currency_variables'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { currencyName } from '../components/currency_variables';
+import { DefaultLayout } from '../components/screen_layout';
 // import { LineChart } from 'react-native-chart-kit';
 
 
 function currency_converter_screen({ navigation }) {
     return (
-        <View style={{ height: "100%", weight: '100%' }}>
+        <DefaultLayout>
             <CurrencyConvertor />
-        </View>
+        </DefaultLayout>
     )
 }
 

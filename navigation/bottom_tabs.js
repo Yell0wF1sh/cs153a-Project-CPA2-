@@ -9,6 +9,7 @@ import currency_converter_history_screen from '../screens/currency_converter_his
 import home_screen from '../screens/homescreen.js';
 import convert_game_screen from '../screens/convert_game.js';
 import test_screen from '../screens/test.js';
+import news_screen from '../screens/news.js';
 
 const Tab = createBottomTabNavigator()
 
@@ -113,6 +114,28 @@ const Tabs = () => {
                             <Text
                                 style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
                             >HISTORY</Text>
+                        </View>
+                    )
+                }}
+            />
+            <Tab.Screen
+                name="News"
+                component={news_screen}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                source={require('../assets/news.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 30,
+                                    height: 30,
+                                    tintColor: focused ? '#52d8f2' : 'black',
+                                }}
+                            />
+                            <Text
+                                style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
+                            >NEWS</Text>
                         </View>
                     )
                 }}

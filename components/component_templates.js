@@ -25,3 +25,11 @@ export const CurrencyCard = ({ currencyText, percentChange, isIncrease, children
         </View>
     )
 }
+
+export const NewsCard = () => {
+    return (
+        <View>
+
+        </View>
+    )
+}
