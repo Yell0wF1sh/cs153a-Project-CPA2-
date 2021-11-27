@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-community/picker'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { currencyInfo } from '../components/currency_variables';
 import moment from 'moment';
 import { CurrencyCard } from '../components/component_templates'
@@ -59,42 +58,7 @@ const ConvertGame = () => {
             .catch((error) => console.error(error))
     }, [currencyNowAmount])
 
-    useEffect(() => {
-        const newProfile = profile.concat(
-            {
-                'currency': currencyNow,
-                'currency amount': currencyNowAmount,
-                'date': currentTime,
-                'operation times': changeTimes
-            }
-        )
-        setProfile(newProfile)
-        storeData(newProfile)
-    }, [changeTimes])
 
-    const getData = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('@currencyGame?id=' + playerId)
-            let data = null
-            if (jsonValue != null) {
-                data = JSON.parse(jsonValue)
-                setProfile(data)
-            } else {
-                setProfile([])
-            }
-        } catch (e) {
-            console.dir(e)
-        }
-    }
-
-    const storeData = async (value) => {
-        try {
-            const jsonValue = JSON.stringify(value)
-            await AsyncStorage.setItem('@currencyGame?id=' + playerId, jsonValue)
-        } catch (e) {
-            console.dir(e)
-        }
-    }
 
     let firstTimeView = (<View></View>)
 
