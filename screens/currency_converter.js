@@ -6,6 +6,7 @@ import { currencyInfo, findCurrency, currencyList } from '../components/currency
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { currencyName } from '../components/currency_variables';
 import { DefaultLayout } from '../components/screen_layout';
+import moment from 'moment';
 // import { LineChart } from 'react-native-chart-kit';
 
 
@@ -98,7 +99,7 @@ const CurrencyConvertor = () => {
                 'abbr2': abbr2,
                 'symbol1': symbol1,
                 'symbol2': symbol2,
-                'time': Date.now(),
+                'time': moment().format('YYYY/MM/D hh:mm:ss'),
             }
         )
         setHistory(newHistory.reverse())

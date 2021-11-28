@@ -33,3 +33,22 @@ export const NewsCard = () => {
         </View>
     )
 }
+
+export const HistoryCard = ({ children }) => {
+    return (
+        <View style={{
+            borderRadius: 10,
+            backgroundColor: 'white',
+            padding: 20,
+            shadowColor: 'grey',
+            shadowRadius: 10,
+            shadowOffset: {
+                width: 5,
+                height: 5,
+            },
+            marginVertical: 10
+        }}>
+            {children}
+        </View>
+    )
+}

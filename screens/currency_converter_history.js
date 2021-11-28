@@ -3,6 +3,7 @@ import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, To
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DefaultLayout } from '../components/screen_layout';
+import { HistoryCard } from '../components/component_templates';
 
 function currency_converter_history_screen({ navigation }) {
     return (
@@ -60,13 +61,22 @@ const CurrencyConvertorHistory = () => {
         }
     }
 
+    // const renderHistory = ({ item }) => {
+    //     return (
+    //         <View style={{ flex: 1, flexDirection: 'row', padding: 2 }}>
+    //             <View style={{ flex: 3 }}><Text style={{ fontSize: 20, backgroundColor: 'lightgreen', textAlign: 'center' }}>{item.symbol1} {item.abbr1} {item.amountFrom}</Text></View>
+    //             <View style={{ flex: 1 }}><Text style={{ fontSize: 20, textAlign: 'center' }}>➔</Text></View>
+    //             <View style={{ flex: 3 }}><Text style={{ fontSize: 20, backgroundColor: 'pink', textAlign: 'center' }}>{item.symbol2} {item.abbr2} {item.amountTo}</Text></View>
+    //         </View>
+    //     )
+    // }
     const renderHistory = ({ item }) => {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', padding: 2 }}>
-                <View style={{ flex: 3 }}><Text style={{ fontSize: 20, backgroundColor: 'lightgreen', textAlign: 'center' }}>{item.symbol1} {item.abbr1} {item.amountFrom}</Text></View>
-                <View style={{ flex: 1 }}><Text style={{ fontSize: 20, textAlign: 'center' }}>➔</Text></View>
-                <View style={{ flex: 3 }}><Text style={{ fontSize: 20, backgroundColor: 'pink', textAlign: 'center' }}>{item.symbol2} {item.abbr2} {item.amountTo}</Text></View>
-            </View>
+            <HistoryCard>
+                <Text style={{ fontSize: 14, color: 'grey', }}>{item.symbol1} {item.abbr1} {item.amountFrom} ➔</Text>
+                <Text style={{ fontSize: 20, }}>{item.symbol2} {item.abbr2} {item.amountTo}</Text>
+                <Text style={{ fontSize: 10, color: 'lightgrey' }}>Converted on {item.time}</Text>
+            </HistoryCard>
         )
     }
 
@@ -86,6 +96,7 @@ const CurrencyConvertorHistory = () => {
                 <FlatList
                     data={history}
                     renderItem={renderHistory}
+                    style={{ paddingHorizontal: 10 }}
                 />
             </ScrollView>
             <View>
