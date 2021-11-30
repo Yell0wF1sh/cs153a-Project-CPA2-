@@ -19,7 +19,7 @@ const Home = () => {
             style={{ flex: 1, justifyContent: 'center' }}
         >
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', opacity: 1.0, backgroundColor: 'rgba(255,255,255,.5)' }}>
-                <Text style={{ fontFamily: 'Jazz LET', fontSize: 30, textAlign: 'center', fontWeight: "bold" }}>Currency Converter</Text>
+                <Text style={{ fontFamily: 'notoserif', fontSize: 30, textAlign: 'center', fontWeight: "bold" }}>Currency Converter</Text>
             </View>
         </ImageBackground>
     )
