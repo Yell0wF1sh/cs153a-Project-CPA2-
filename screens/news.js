@@ -3,6 +3,7 @@ import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, To
 import { Picker } from '@react-native-community/picker'
 import { DefaultLayout } from '../components/screen_layout';
 import { NewsCard } from '../components/component_templates';
+import { CorsRequest } from 'cors';
 
 function news_screen({ navigation }) {
     return (
@@ -37,12 +38,8 @@ const News = () => {
     }
 
     useEffect(() => {
-        newsapi.v2.topHeadlines({
-            q: 'trump',
-            category: 'politics',
-            language: 'en',
-            country: 'us'
-        }).then(response => {
+        fetch("https://newsapi.org/v2/top-headlines?country=us&apiKey=544289bbd7d642b78ae1bdc4a6d78cce")
+        .then(response => {
             console.log(response);
         });
         setIsRefresh(false)
