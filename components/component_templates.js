@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 export const CurrencyCard = ({ currencyText, percentChange, isIncrease, children }) => {
     return (
@@ -26,11 +26,28 @@ export const CurrencyCard = ({ currencyText, percentChange, isIncrease, children
     )
 }
 
-export const NewsCard = () => {
+export const NewsCard = ({children, link}) => {
     return (
-        <View>
-
-        </View>
+        <TouchableOpacity
+            onPress={() => {
+                
+            }}
+        >
+            <View   style={{
+                borderRadius: 10,
+                backgroundColor: 'white',
+                padding: 20,
+                shadowColor: 'grey',
+                shadowRadius: 10,
+                shadowOffset: {
+                    width: 5,
+                    height: 5,
+                },
+                marginVertical: 10}}
+            >
+                {children}
+            </View>
+        </TouchableOpacity>
     )
 }
 

@@ -27,6 +27,7 @@ const News = () => {
     const newsapi = new NewsAPI('544289bbd7d642b78ae1bdc4a6d78cce');
 
     const [isRefresh, setIsRefresh] = useState(false)
+    const [newsLs, setNewsLs] = useState([])
 
     const refreshIcon = () => {
         if (isRefresh) {
@@ -37,13 +38,24 @@ const News = () => {
         }
     }
 
-    useEffect(() => {
-        fetch("https://newsapi.org/v2/top-headlines?country=us&apiKey=544289bbd7d642b78ae1bdc4a6d78cce")
-        .then(response => {
-            console.log(response);
-        });
-        setIsRefresh(false)
-    }, [isRefresh])
+    const NewsView = ({data}) => {
+        for (let i = 0; i < data.length(); i ++){
+            return(
+                <NewsCard>
+                    <Text>{data[i]['title']}</Text>
+                    <Image source={{uri: data[i]['urlToImage']}}/>
+                    <Text>{data[i]['description']}</Text>
+                </NewsCard>    
+            )
+        }
+    } 
+
+
+    const getNews = async() => {
+        await Axios.post("https://converter-game.herokuapp.com" + "/fetchNews",
+            {size: 10});
+        
+    }
 
     return (
         <SafeAreaView>
@@ -54,6 +66,9 @@ const News = () => {
                 >
                     {refreshIcon}
                 </TouchableOpacity>
+            </View>
+            <View>
+                <NewsView data={newsLs}/>
             </View>
         </SafeAreaView>
     )
