@@ -64,12 +64,6 @@ const News = () => {
                 renderItem={renderNews}
                 style={{ paddingHorizontal: 10 }}
             />
-            <View style={{ flex: 1 }}>
-                <Image
-                    source={{ uri: "https://image.cnbcfm.com/api/v1/image/106933194-1629916464617-gettyimages-1263001936-1006_18_fl191110194.jpeg?v=1629916618" }}
-                    style={{ height: 100, width: 100 }}
-                />
-            </View>
         </SafeAreaView>
     )
 }
