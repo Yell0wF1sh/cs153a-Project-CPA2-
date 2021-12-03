@@ -3,7 +3,7 @@ import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, To
 import { Picker } from '@react-native-community/picker'
 import { DefaultLayout } from '../components/screen_layout';
 import { NewsCard } from '../components/component_templates';
-import { CorsRequest } from 'cors';
+import axios from 'axios';
 
 function news_screen({ navigation }) {
     return (
@@ -13,15 +13,6 @@ function news_screen({ navigation }) {
     )
 }
 
-function refreshIcon(bool) {
-    if (bool) {
-        return (<Image source={require('../assets/refresh.gif')} />)
-    }
-    else {
-        return (<Image source={require('../assets/refresh.png')} />)
-    }
-}
-
 const News = () => {
     const NewsAPI = require('newsapi');
     const newsapi = new NewsAPI('544289bbd7d642b78ae1bdc4a6d78cce');
@@ -29,46 +20,55 @@ const News = () => {
     const [isRefresh, setIsRefresh] = useState(false)
     const [newsLs, setNewsLs] = useState([])
 
-    const refreshIcon = () => {
-        if (isRefresh) {
-            return (<Image source={require('../assets/refresh.gif')} />)
-        }
-        else {
-            return (<Image source={require('../assets/refresh.png')} />)
-        }
+    // const refreshIcon = () => {
+    //     if (isRefresh) {
+    //         return (<Image source={require('../assets/refresh.gif')} />)
+    //     }
+    //     else {
+    //         return (<Image source={require('../assets/refresh.png')} />)
+    //     }
+    // }
+
+    const renderNews = ({ item }) => {
+        return (
+            <NewsCard link={item['url']} image={item['urlToImage']}>
+                <Text style={{ paddingVertical: 5, paddingHorizontal: 10, fontSize: 16, color: 'white', backgroundColor: 'rgba(0,0,0,.5)' }}>{item['title']}</Text>
+            </NewsCard>
+        )
     }
 
-    const NewsView = ({data}) => {
-        for (let i = 0; i < data.length(); i ++){
-            return(
-                <NewsCard>
-                    <Text>{data[i]['title']}</Text>
-                    <Image source={{uri: data[i]['urlToImage']}}/>
-                    <Text>{data[i]['description']}</Text>
-                </NewsCard>    
-            )
-        }
-    } 
 
-
-    const getNews = async() => {
-        await Axios.post("https://converter-game.herokuapp.com" + "/fetchNews",
-            {size: 10});
-        
+    const getNews = async () => {
+        let result = { data: [] }
+        result = await axios.post("https://converter-game.herokuapp.com" + "/news",
+            { size: 10, category: 'business' })
+        setNewsLs(result.data)
+        console.log(result.data)
     }
 
     return (
-        <SafeAreaView>
-            <View>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row' }}>
                 <Text>Newswire</Text>
                 <TouchableOpacity
-                    onPress={() => setIsRefresh(true)}
+                    onPress={() => {
+                        // setIsRefresh(true)
+                        getNews()
+                    }}
                 >
-                    {refreshIcon}
+                    <Text>Touch</Text>
                 </TouchableOpacity>
             </View>
-            <View>
-                <NewsView data={newsLs}/>
+            <FlatList
+                data={newsLs}
+                renderItem={renderNews}
+                style={{ paddingHorizontal: 10 }}
+            />
+            <View style={{ flex: 1 }}>
+                <Image
+                    source={{ uri: "https://image.cnbcfm.com/api/v1/image/106933194-1629916464617-gettyimages-1263001936-1006_18_fl191110194.jpeg?v=1629916618" }}
+                    style={{ height: 100, width: 100 }}
+                />
             </View>
         </SafeAreaView>
     )

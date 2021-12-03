@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, Linking, Alert } from 'react-native';
 
 export const CurrencyCard = ({ currencyText, percentChange, isIncrease, children }) => {
     return (
@@ -26,27 +26,41 @@ export const CurrencyCard = ({ currencyText, percentChange, isIncrease, children
     )
 }
 
-export const NewsCard = ({children, link}) => {
+const externalLink = async (url) => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+        await Linking.openURL(url)
+    } else {
+        Alert.alert('Hyperlink failed')
+    }
+}
+
+export const NewsCard = ({ children, link, image }) => {
     return (
         <TouchableOpacity
             onPress={() => {
-                
+                externalLink(link)
             }}
         >
-            <View   style={{
-                borderRadius: 10,
-                backgroundColor: 'white',
-                padding: 20,
-                shadowColor: 'grey',
-                shadowRadius: 10,
-                shadowOffset: {
-                    width: 5,
-                    height: 5,
-                },
-                marginVertical: 10}}
+            <ImageBackground
+                source={{ uri: image }}
+                resizeMode='cover'
+                style={{
+                    borderRadius: 10,
+                    backgroundColor: 'white',
+                    height: 170,
+                    shadowColor: 'grey',
+                    shadowRadius: 10,
+                    shadowOffset: {
+                        width: 5,
+                        height: 5,
+                    },
+                    marginVertical: 10,
+                    flexDirection: 'column-reverse',
+                }}
             >
                 {children}
-            </View>
+            </ImageBackground>
         </TouchableOpacity>
     )
 }
