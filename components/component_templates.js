@@ -36,6 +36,7 @@ const externalLink = async (url) => {
 }
 
 export const NewsCard = ({ children, link, image }) => {
+
     return (
         <TouchableOpacity
             onPress={() => {
@@ -43,7 +44,7 @@ export const NewsCard = ({ children, link, image }) => {
             }}
         >
             <ImageBackground
-                source={{ uri: image }}
+                source={(image == null) ? require('../assets/unknown.png') : { uri: image }}
                 resizeMode='cover'
                 style={{
                     borderRadius: 10,

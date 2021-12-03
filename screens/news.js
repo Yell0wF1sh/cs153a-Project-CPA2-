@@ -29,6 +29,10 @@ const News = () => {
     //     }
     // }
 
+    useEffect(() => {
+        getNews()
+    }, [isRefresh])
+
     const renderNews = ({ item }) => {
         return (
             <NewsCard link={item['url']} image={item['urlToImage']}>
@@ -40,23 +44,24 @@ const News = () => {
 
     const getNews = async () => {
         let result = { data: [] }
-        result = await axios.post("https://converter-game.herokuapp.com" + "/news",
-            { size: 10, category: 'business' })
+        result = await axios.post("https://converter-game.herokuapp.com/news",
+            { size: 50, category: 'business' })
         setNewsLs(result.data)
-        console.log(result.data)
     }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row' }}>
-                <Text>Newswire</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: 'grey', paddingHorizontal: 10 }}>
+                <Text style={{ fontSize: 40 }}>Newswire</Text>
                 <TouchableOpacity
                     onPress={() => {
-                        // setIsRefresh(true)
-                        getNews()
+                        setIsRefresh(!isRefresh)
                     }}
                 >
-                    <Text>Touch</Text>
+                    <Image
+                        source={require('../assets/refresh.png')}
+                        style={{ height: 30, width: 30 }}
+                    />
                 </TouchableOpacity>
             </View>
             <FlatList
