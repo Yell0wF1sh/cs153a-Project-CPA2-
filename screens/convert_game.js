@@ -8,6 +8,7 @@ import { currencyList } from '../components/currency_variables';
 import { currencyName, currencyAbbr } from '../components/currency_variables';
 import { DefaultLayout } from '../components/screen_layout';
 import ValueProvider, { useValue } from '../components/value_context';
+import axios from 'axios';
 
 function convert_game_screen({ navigation }) {
     return (
@@ -27,6 +28,7 @@ const ConvertGame = () => {
     const [changeTimes, setChangeTimes] = useState(0)
     const [profile, setProfile] = useState([])
     const [currencyAmountMod, setCurrencyAmountMod] = useState(0)
+    const [isRefresh, setIsRefresh] = useState(false)
     const styles = StyleSheet.create({
         text: {
             fontSize: 18,
@@ -59,6 +61,17 @@ const ConvertGame = () => {
             .catch((error) => console.error(error))
     }, [currencyNowAmount])
 
+
+    // useEffect(() => {
+    //     const fetch = async () => {
+    //         let newProfile = []
+    //         newProfile = await axios.post('https://converter-game.herokuapp.com/fetchConvertVal',
+    //             { base: 'EUR', symbols: currencyList.toString() })
+    //         return (newProfile)
+    //     }
+    //     setProfile(fetch())
+    //     console.log(profile)
+    // }, [isRefresh])
 
 
     let firstTimeView = (<View></View>)
@@ -105,6 +118,7 @@ const ConvertGame = () => {
                     <Text style={{ fontSize: 30, fontWeight: "bold" }}>Now you own {currencyNowAmount} {currencyNow}</Text>
                     <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} USD</Text>
                     <Text style={{ fontSize: 30, fontWeight: "bold" }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
+                    {/* <Button title='Refresh' onPress={() => { setIsRefresh(!isRefresh) }} /> */}
                 </View>
                 <ScrollView style={{ flex: 1, paddingTop: 10, flexWrap: 'wrap' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

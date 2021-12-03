@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { Picker } from '@react-native-community/picker'
+import { Picker } from '@react-native-community/picker' //try to incooperate it
 import { DefaultLayout } from '../components/screen_layout';
 import { NewsCard } from '../components/component_templates';
 import axios from 'axios';
@@ -52,10 +52,10 @@ const News = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: 'grey', paddingHorizontal: 10 }}>
-                <Text style={{ fontSize: 40 }}>Newswire</Text>
+                <Text style={{ fontSize: 40 }}>News</Text>
                 <TouchableOpacity
                     onPress={() => {
-                        setIsRefresh(!isRefresh)
+                        setIsRefresh(!isRefresh) //Better logic?
                     }}
                 >
                     <Image
