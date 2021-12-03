@@ -8,6 +8,7 @@ export const CurrencyCard = ({ currencyText, percentChange, isIncrease, children
             borderRadius: 10,
             backgroundColor: 'white',
             padding: 5,
+            margin: 10,
             shadowColor: 'grey',
             shadowRadius: 10,
             shadowOffset: {

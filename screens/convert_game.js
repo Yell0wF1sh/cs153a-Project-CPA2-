@@ -80,20 +80,24 @@ const ConvertGame = () => {
     }, [currencyNow])
 
     const renderCCards = ({ item }) => {
-        <CurrencyCard
-            currencyText={item['historyTitle'] + ' ' + item['currencySymbol']}
-            percentChange='+0.01%'
-            isIncrease={true}
-        >
-            <Button
-                title='SWITCH CURRENCY'
-                color='#009dd6'
-                onPress={() => {
-                    setCurrencyNow(item['historyTitle'])
-                    setChangeTimes(changeTimes + 1)
-                }}
-            />
-        </CurrencyCard>
+        console.log(item)
+        return (
+            <CurrencyCard
+                currencyText={item['historyTitle'] + ' ' + item['currencySymbol']}
+                percentChange='+0.01%'
+                isIncrease={true}
+
+            >
+                <Button
+                    title='SWITCH CURRENCY'
+                    color='#009dd6'
+                    onPress={() => {
+                        setCurrencyNow(item['historyTitle'])
+                        setChangeTimes(changeTimes + 1)
+                    }}
+                />
+            </CurrencyCard>
+        )
     }
 
     let firstTimeView = (<View></View>)
@@ -127,8 +131,8 @@ const ConvertGame = () => {
     return (
         <ValueProvider data={profile}>
             <View style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
-                <View style={{
-                    flex: 1,
+                <SafeAreaView style={{
+                    flex: 2,
                     flexWrap: 'wrap',
                     justifyContent: 'center',
                     // alignItems: 'center',
@@ -137,11 +141,11 @@ const ConvertGame = () => {
                     padding: 5,
                 }}>
                     <Text style={{ color: 'grey', fontSize: 25 }}>You started with $100</Text>
-                    <Text style={{ fontSize: 30, fontWeight: "bold" }}>Now you own {currencyNowAmount} {currencyNow}</Text>
+                    <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Now you own {currencyNowAmount} {currencyNow}</Text>
                     <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} USD</Text>
-                    <Text style={{ fontSize: 30, fontWeight: "bold" }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
+                    <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
                     {/* <Button title='Refresh' onPress={() => { setIsRefresh(!isRefresh) }} /> */}
-                </View>
+                </SafeAreaView>
                 {/* <ScrollView style={{ flex: 1, paddingTop: 10 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                         <CurrencyCard
@@ -296,9 +300,9 @@ const ConvertGame = () => {
                 </ScrollView> */}
                 <FlatList
                     data={currencyInfo}
-                    render={renderCCards}
+                    renderItem={renderCCards}
                     numColumns='2'
-                    style={{ justifyContent: 'space-around', paddingTop: 10 }}
+                    style={{ paddingTop: 10, flex: 2 }}
                 />
             </View>
 
