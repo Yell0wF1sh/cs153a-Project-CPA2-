@@ -74,7 +74,7 @@ const Tabs = () => {
                     )
                 }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Test"
                 component={test_screen}
                 options={{
@@ -95,7 +95,7 @@ const Tabs = () => {
                         </View>
                     )
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="History"
                 component={currency_converter_history_screen}
