@@ -25,6 +25,7 @@
     "newsapi": "^2.4.1",
     "paths-js": "^0.4.11",
     "point-in-polygon": "^1.1.0",
+    "query-string": "^7.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",

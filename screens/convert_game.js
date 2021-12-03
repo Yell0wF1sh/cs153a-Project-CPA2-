@@ -28,6 +28,7 @@ const ConvertGame = () => {
     const [changeTimes, setChangeTimes] = useState(0)
     const [profile, setProfile] = useState([])
     const [currencyAmountMod, setCurrencyAmountMod] = useState(0)
+    const [cvLs, setCvLs] = useState([])
     const [isRefresh, setIsRefresh] = useState(false)
     const styles = StyleSheet.create({
         text: {
@@ -64,15 +65,36 @@ const ConvertGame = () => {
 
     // useEffect(() => {
     //     const fetch = async () => {
-    //         let newProfile = []
-    //         newProfile = await axios.post('https://converter-game.herokuapp.com/fetchConvertVal',
+    //         let newCvLs = []
+    //         newCvLs = await axios.post('https://converter-game.herokuapp.com/fetchConvertVal',
     //             { base: 'EUR', symbols: currencyList.toString() })
-    //         return (newProfile)
+    //         return (newCvLs)
     //     }
-    //     setProfile(fetch())
-    //     console.log(profile)
+    //     setCvLs(fetch())
+    //     console.log(cvLs)
     // }, [isRefresh])
 
+    useEffect(() => {
+        setCurrencyLast(currencyNow)
+
+    }, [currencyNow])
+
+    const renderCCards = ({ item }) => {
+        <CurrencyCard
+            currencyText={item['historyTitle'] + ' ' + item['currencySymbol']}
+            percentChange='+0.01%'
+            isIncrease={true}
+        >
+            <Button
+                title='SWITCH CURRENCY'
+                color='#009dd6'
+                onPress={() => {
+                    setCurrencyNow(item['historyTitle'])
+                    setChangeTimes(changeTimes + 1)
+                }}
+            />
+        </CurrencyCard>
+    }
 
     let firstTimeView = (<View></View>)
 
@@ -120,7 +142,7 @@ const ConvertGame = () => {
                     <Text style={{ fontSize: 30, fontWeight: "bold" }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
                     {/* <Button title='Refresh' onPress={() => { setIsRefresh(!isRefresh) }} /> */}
                 </View>
-                <ScrollView style={{ flex: 1, paddingTop: 10, flexWrap: 'wrap' }}>
+                {/* <ScrollView style={{ flex: 1, paddingTop: 10 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                         <CurrencyCard
                             currencyText={currencyText(0)}
@@ -271,7 +293,13 @@ const ConvertGame = () => {
                             />
                         </CurrencyCard>
                     </View>
-                </ScrollView>
+                </ScrollView> */}
+                <FlatList
+                    data={currencyInfo}
+                    render={renderCCards}
+                    numColumns='2'
+                    style={{ justifyContent: 'space-around', paddingTop: 10 }}
+                />
             </View>
 
         </ValueProvider>
