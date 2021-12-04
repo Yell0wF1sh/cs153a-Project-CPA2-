@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView, Animated } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DefaultLayout } from '../components/screen_layout';
 import { HistoryCard } from '../components/component_templates';
+import { transform } from 'lodash';
 
 function currency_converter_history_screen({ navigation }) {
     return (
@@ -20,6 +21,7 @@ const wait = (timeout) => {
 const CurrencyConvertorHistory = () => {
     const [history, setHistory] = useState([])
     const [refreshing, setRefreshing] = useState(false)
+    const scrollY = React.useRef(new Animated.Value(0)).current
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -70,35 +72,65 @@ const CurrencyConvertorHistory = () => {
     //         </View>
     //     )
     // }
-    const renderHistory = ({ item }) => {
-        return (
-            <HistoryCard>
-                <Text style={{ fontSize: 14, color: 'grey', }}>{item.symbol1} {item.abbr1} {item.amountFrom} ➔</Text>
-                <Text style={{ fontSize: 20, }}>{item.symbol2} {item.abbr2} {item.amountTo}</Text>
-                <Text style={{ fontSize: 10, color: 'lightgrey' }}>Converted on {item.time}</Text>
-            </HistoryCard>
-        )
-    }
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ borderBottomWidth: 1, borderBottomColor: 'grey', paddingBottom: 3 }}>
+            {/* <Image
+                style={StyleSheet.absoluteFillObject}
+            /> */}
+            {/* <View style={{ borderBottomWidth: 1, borderBottomColor: 'grey', paddingBottom: 3 }}>
                 <Text style={{ fontSize: 40 }}>History</Text>
-            </View>
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
+            </View> */}
+            <Animated.FlatList
+                data={history}
+                renderItem={({ item, index }) => {
+                    const inputRange = [-1, 0, 122 * index, 122 * (index + 2)]
+                    const scaleIn = scrollY.interpolate({
+                        inputRange: inputRange,
+                        outputRange: [1, 1, 1, 0],
+                    })
+                    // const scaleOut = scrollY.interpolate({
+                    //     inputRange: inputRange,
+                    //     outputRange: [-1, -1, -1, 0],
+                    // })
+                    // const opacityIn = scrollY.interpolate({
+                    //     inputRange: opacityInputRangeIn,
+                    //     outputRange: [1, 1, 1, 0],
+                    // })
+                    return (
+                        <Animated.View style={{
+                            borderRadius: 10,
+                            backgroundColor: 'white',
+                            padding: 20,
+                            shadowColor: 'grey',
+                            shadowRadius: 10,
+                            shadowOffset: {
+                                width: 5,
+                                height: 5,
+                            },
+                            margin: 10,
+                            // opacity: [{ opacity: opacityIn }],
+                            transform: [{ scale: scaleIn }],
+                        }}>
+                            <Text style={{ fontSize: 14, color: 'grey', }}>{item.symbol1} {item.abbr1} {item.amountFrom} ➔</Text>
+                            <Text style={{ fontSize: 20, }}>{item.symbol2} {item.abbr2} {item.amountTo}</Text>
+                            <Text style={{ fontSize: 10, color: 'lightgrey' }}>Converted on {item.time}</Text>
+                        </Animated.View>
+                    )
                 }
-            >
-                <FlatList
-                    data={history}
-                    renderItem={renderHistory}
-                    style={{ paddingHorizontal: 10 }}
-                />
-            </ScrollView>
+                }
+                style={{ paddingHorizontal: 10 }}
+                // refreshControl={
+                //     <RefreshControl
+                //         refreshing={refreshing}
+                //         onRefresh={onRefresh}
+                //     />
+                // }
+                onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                    { useNativeDriver: true }
+                )}
+            />
             <View>
                 <Button
                     title='Clear History'

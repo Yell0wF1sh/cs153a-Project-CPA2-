@@ -79,7 +79,7 @@ export const HistoryCard = ({ children }) => {
                 width: 5,
                 height: 5,
             },
-            marginVertical: 10
+            margin: 10
         }}>
             {children}
         </View>

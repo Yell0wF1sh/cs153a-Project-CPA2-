@@ -51,7 +51,7 @@ const News = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: 'grey', paddingHorizontal: 10 }}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: 'grey', paddingHorizontal: 10 }}>
                 <Text style={{ fontSize: 40 }}>News</Text>
                 <TouchableOpacity
                     onPress={() => {
@@ -63,7 +63,7 @@ const News = () => {
                         style={{ height: 30, width: 30 }}
                     />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <FlatList
                 data={newsLs}
                 renderItem={renderNews}
