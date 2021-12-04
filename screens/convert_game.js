@@ -29,7 +29,8 @@ const ConvertGame = () => {
     const [profile, setProfile] = useState([])
     const [currencyAmountMod, setCurrencyAmountMod] = useState(0)
     const [cvLs, setCvLs] = useState([])
-    const [isRefresh, setIsRefresh] = useState(false)
+    const [isStart, setIsStart] = useState(false)
+    const [isFocused, setIsFocused] = useState(false)
     const styles = StyleSheet.create({
         text: {
             fontSize: 18,
@@ -38,41 +39,42 @@ const ConvertGame = () => {
     })
 
     useEffect(() => {
-        setCurrencyLast(currencyNow)
-        fetch('http://data.fixer.io/api/convert?access_key=b16fced1bae2406403f788e14b2ff326&from='
-            + currencyLast + '&to=' + currencyNow + '&amount=' + currencyLastAmount)
-            .then((response) => response.json())
-            .then((convertdata) => {
-                setCurrencyNowAmount(convertdata["result"])
-                console.log("CurrencyNowAmount=" + convertdata["result"])
-                console.log("CurrencyNow=" + currencyNow)
-            })
-            .catch((error) => console.error(error))
-    }, [currencyNow])
-
-    useEffect(() => {
-        setCurrencyLastAmount(currencyNowAmount)
-        fetch('http://data.fixer.io/api/convert?access_key=b16fced1bae2406403f788e14b2ff326&from='
-            + currencyNow + '&to=USD&amount=' + currencyNowAmount)
-            .then((response) => response.json())
-            .then((convertdata) => {
-                setCurrencyAmountMod(convertdata["result"])
-                console.log("CurrencyAmountMod=" + currencyAmountMod)
-            })
-            .catch((error) => console.error(error))
-    }, [currencyNowAmount])
+        const fetchLs = async () => {
+            let newCvLs = { data: [] }
+            newCvLs = await axios.post('https://converter-game.herokuapp.com/fetchConvertVal',
+                { base: 'EUR', symbols: currencyList.toString() })
+            setCvLs(newCvLs.data)
+        }
+        fetchLs()
+        console.log(cvLs)
+    }, [isStart])
 
 
     // useEffect(() => {
-    //     const fetch = async () => {
-    //         let newCvLs = []
-    //         newCvLs = await axios.post('https://converter-game.herokuapp.com/fetchConvertVal',
-    //             { base: 'EUR', symbols: currencyList.toString() })
-    //         return (newCvLs)
-    //     }
-    //     setCvLs(fetch())
-    //     console.log(cvLs)
-    // }, [isRefresh])
+    //     setCurrencyLast(currencyNow)
+    //     fetch('http://data.fixer.io/api/convert?access_key=b16fced1bae2406403f788e14b2ff326&from='
+    //         + currencyLast + '&to=' + currencyNow + '&amount=' + currencyLastAmount)
+    //         .then((response) => response.json())
+    //         .then((convertdata) => {
+    //             setCurrencyNowAmount(convertdata["result"])
+    //             console.log("CurrencyNowAmount=" + convertdata["result"])
+    //             console.log("CurrencyNow=" + currencyNow)
+    //         })
+    //         .catch((error) => console.error(error))
+    // }, [currencyNow])
+
+    // useEffect(() => {
+    //     setCurrencyLastAmount(currencyNowAmount)
+    //     fetch('http://data.fixer.io/api/convert?access_key=b16fced1bae2406403f788e14b2ff326&from='
+    //         + currencyNow + '&to=USD&amount=' + currencyNowAmount)
+    //         .then((response) => response.json())
+    //         .then((convertdata) => {
+    //             setCurrencyAmountMod(convertdata["result"])
+    //             console.log("CurrencyAmountMod=" + currencyAmountMod)
+    //         })
+    //         .catch((error) => console.error(error))
+    // }, [currencyNowAmount])
+
 
     useEffect(() => {
         setCurrencyLast(currencyNow)
@@ -80,7 +82,6 @@ const ConvertGame = () => {
     }, [currencyNow])
 
     const renderCCards = ({ item }) => {
-        console.log(item)
         return (
             <CurrencyCard
                 currencyText={item['historyTitle'] + ' ' + item['currencySymbol']}
@@ -127,187 +128,50 @@ const ConvertGame = () => {
             </View>
     }
 
-
-    return (
-        <ValueProvider data={profile}>
-            <View style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
-                <SafeAreaView style={{
-                    flex: 2,
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    // alignItems: 'center',
-                    backgroundColor: 'white',
-                    borderRadius: 10,
-                    padding: 5,
-                }}>
-                    <Text style={{ color: 'grey', fontSize: 25 }}>You started with $100</Text>
-                    <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Now you own {currencyNowAmount} {currencyNow}</Text>
-                    <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} USD</Text>
-                    <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
-                    {/* <Button title='Refresh' onPress={() => { setIsRefresh(!isRefresh) }} /> */}
+    if (!isStart) {
+        return (
+            <SafeAreaView>
+                <TouchableOpacity
+                    onPressIn={() => setIsFocused(true)}
+                    onPressOut={() => {
+                        setIsStart(true)
+                        setIsFocused(false)
+                    }}
+                    style={{ justifyContentL: 'center', alignItems: 'center' }}
+                >
+                    <Text>This game </Text>
+                    <Text style={isFocused ? { color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10 } : { color: '#52d8f2', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>START</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+        )
+    } else {
+        return (
+            <ValueProvider data={profile}>
+                <SafeAreaView style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
+                    <SafeAreaView style={{
+                        flex: 2,
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        // alignItems: 'center',
+                        backgroundColor: 'white',
+                        borderRadius: 10,
+                        padding: 5,
+                    }}>
+                        <Text style={{ color: 'grey', fontSize: 25 }}>You started with $100</Text>
+                        <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Now you own {currencyNowAmount} {currencyNow}</Text>
+                        <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} USD</Text>
+                        <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
+                    </SafeAreaView>
+                    <FlatList
+                        data={currencyInfo}
+                        renderItem={renderCCards}
+                        numColumns='2'
+                        style={{ paddingTop: 10, flex: 2 }}
+                    />
                 </SafeAreaView>
-                {/* <ScrollView style={{ flex: 1, paddingTop: 10 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <CurrencyCard
-                            currencyText={currencyText(0)}
-                            percentChange='+0.01%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(0))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                        <CurrencyCard
-                            currencyText={currencyText(1)}
-                            percentChange='-0.01%'
-                            isIncrease={false}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(1))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10 }}>
-                        <CurrencyCard
-                            currencyText={currencyText(2)}
-                            percentChange='+0%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(2))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                        <CurrencyCard
-                            currencyText={currencyText(3)}
-                            percentChange='+1.00%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(3))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10 }}>
-                        <CurrencyCard
-                            currencyText={currencyText(4)}
-                            percentChange='+0%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(4))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                        <CurrencyCard
-                            currencyText={currencyText(5)}
-                            percentChange='+1.00%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(5))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10 }}>
-                        <CurrencyCard
-                            currencyText={currencyText(6)}
-                            percentChange='+0%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(6))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                        <CurrencyCard
-                            currencyText={currencyText(7)}
-                            percentChange='+1.00%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(7))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10 }}>
-                        <CurrencyCard
-                            currencyText={currencyText(8)}
-                            percentChange='+0%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(8))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                        <CurrencyCard
-                            currencyText={currencyText(9)}
-                            percentChange='+1.00%'
-                            isIncrease={true}
-                        >
-                            <Button
-                                title='SWITCH CURRENCY'
-                                color='#009dd6'
-                                onPress={() => {
-                                    setCurrencyNow(currencyAbbr(9))
-                                    setChangeTimes(changeTimes + 1)
-                                }}
-                            />
-                        </CurrencyCard>
-                    </View>
-                </ScrollView> */}
-                <FlatList
-                    data={currencyInfo}
-                    renderItem={renderCCards}
-                    numColumns='2'
-                    style={{ paddingTop: 10, flex: 2 }}
-                />
-            </View>
-
-        </ValueProvider>
-    )
+            </ValueProvider>
+        )
+    }
 }
 
 function currencyText(num) {
