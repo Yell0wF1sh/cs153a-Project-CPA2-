@@ -78,9 +78,9 @@ const CurrencyConvertorHistory = () => {
             {/* <Image
                 style={StyleSheet.absoluteFillObject}
             /> */}
-            {/* <View style={{ borderBottomWidth: 1, borderBottomColor: 'grey', paddingBottom: 3 }}>
+            <View style={{ borderBottomWidth: 1, borderBottomColor: 'grey', paddingBottom: 3 }}>
                 <Text style={{ fontSize: 40 }}>History</Text>
-            </View> */}
+            </View>
             <Animated.FlatList
                 data={history}
                 renderItem={({ item, index }) => {

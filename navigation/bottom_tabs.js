@@ -17,6 +17,7 @@ const Tabs = () => {
     return (
         <Tab.Navigator
             screenOptions={{
+                headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
                     position: 'absolute',
