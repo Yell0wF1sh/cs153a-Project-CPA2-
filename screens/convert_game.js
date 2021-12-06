@@ -20,7 +20,8 @@ function convert_game_screen({ navigation }) {
         const [currencyAmountMod, setCurrencyAmountMod] = useState(0)
         const [cvLs, setCvLs] = useState([]) //currency value list
         const [isRefresh, setIsRefresh] = useState(false)
-        const [isFocused, setIsFocused] = useState(false)
+        const [isFocused1, setIsFocused1] = useState(false)
+        const [isFocused2, setIsFocused2] = useState(false)
 
         useEffect(() => {
             const fetchLs = async () => {
@@ -105,7 +106,7 @@ function convert_game_screen({ navigation }) {
 
         return (
             <ValueProvider data={profile}>
-                <SafeAreaView style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
+                <SafeAreaView style={{ flex: 1, width: '100%', height: '100%', padding: 10, alignItems: 'center' }}>
                     <SafeAreaView style={{
                         flex: 2,
                         flexWrap: 'wrap',
@@ -120,14 +121,14 @@ function convert_game_screen({ navigation }) {
                         <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} EUR</Text>
                         <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
                         <TouchableOpacity
-                            onPressIn={() => setIsFocused(true)}
+                            onPressIn={() => setIsFocused1(true)}
                             onPress={() => {
                                 setIsRefresh(true)
-                                setIsFocused(false)
+                                setIsFocused1(false)
                             }}
                             style={{ alignItems: 'center' }}
                         >
-                            <Text style={isFocused ? { color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10 } : { color: '#52d8f2', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>REFRESH</Text>
+                            <Text style={isFocused1 ? { color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10 } : { color: '#52d8f2', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>REFRESH</Text>
                         </TouchableOpacity>
                     </SafeAreaView>
                     <FlatList
@@ -136,6 +137,16 @@ function convert_game_screen({ navigation }) {
                         numColumns='2'
                         style={{ paddingTop: 10, flex: 2 }}
                     />
+                    <TouchableOpacity
+                        onPressIn={() => setIsFocused2(true)}
+                        onPress={() => {
+                            setIsFocused2(false)
+                            navigation.navigate('Home', { screen: 'Game' })
+                        }}
+                        style={{ width: 300, marginTop: 5 }}
+                    >
+                        <Text style={isFocused2 ? { color: '#52d8f2', backgroundColor: '#fff', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 } : { color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 }}>QUIT</Text>
+                    </TouchableOpacity>
                 </SafeAreaView>
             </ValueProvider>
         )
@@ -143,9 +154,7 @@ function convert_game_screen({ navigation }) {
     }
 
     return (
-        <DefaultLayout>
-            <ConvertGame />
-        </DefaultLayout>
+        <ConvertGame />
     )
 }
 

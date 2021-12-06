@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Tabs from './navigation/bottom_tabs'
 import ValueProvider from './components/value_context';
+import convert_game_screen from './screens/convert_game';
 import register_screen from './screens/register';
-import start_view_screen from './screens/start_view_screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,12 +16,12 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
         <Stack.Screen name="Home" component={Tabs} />
         <Stack.Screen
-          name="Register"
-          component={register_screen}
+          name="Game"
+          component={convert_game_screen}
         />
         <Stack.Screen
-          name="Start"
-          component={start_view_screen}
+          name="Register"
+          component={register_screen}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,76 +1,99 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import axios from 'axios';
-import { DefaultLayout } from '../components/screen_layout';
-import convert_game_screen from './convert_game';
 
 
 function register_screen({ navigation }) {
-    const [isFocused, setIsFocused] = useState(false)
+    const [isFocused1, setIsFocused1] = useState(false)
+    const [isFocused2, setIsFocused2] = useState(false)
     const [isRegister, setIsRegister] = useState(false)
     const [isSuccessful, setIsSuccessful] = useState(false)
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState("")
+    const [secret, setSecret] = useState("")
 
-    const Register = () => {
-
-        useEffect(() => {
-            const fetch = async () => {
-                await axios.post('https://converter-game.herokuapp.com/register',
-                    { email: email })
-                    .then((message) => {
-                        console.log(message)
-                        setIsSuccessful(message['data']['success'])
-                    }).catch((error) => console.error(error))
-            }
+    useEffect(() => {
+        const fetch = async () => {
+            await axios.post('https://converter-game.herokuapp.com/register',
+                { email: email })
+                .then((message) => {
+                    console.log(message)
+                    setIsSuccessful(message['data']['success'])
+                    setSecret(message['data']['secret'])
+                }).catch((error) => console.error(error))
+        }
+        try {
             fetch()
             setIsRegister(false)
-        }, [isRegister])
+        } catch (e) {
+            console.error(e)
+        }
+    }, [isRegister])
 
-        if (!isSuccessful) {
-            return (
-                <SafeAreaView>
+    if (!isSuccessful) {
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}></View>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <TextInput
                         placeholder='Email'
                         onChangeText={(text) => {
                             setEmail(text)
+                            console.log(email)
                         }}
+                        style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginBottom: 2.5 }}
                     />
                     <TouchableOpacity
-                        onPressIn={() => setIsFocused(true)}
+                        onPressIn={() => setIsFocused1(true)}
                         onPress={() => {
                             setIsRegister(true)
-                            setIsFocused(false)
+                            setIsFocused1(false)
                         }}
-                        style={{ justifyContentL: 'center', alignItems: 'center' }}
+                        style={{ width: 250, marginTop: 5, marginBottom: 2.5 }}
                     >
-                        <Text style={isFocused ? { color: 'white', backgroundColor: '#39C5BB', fontSize: 20, padding: 10 } : { color: '#39C5BB', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>CREATE AN ACCOUNT</Text>
+                        <Text style={isFocused1 ? { color: '#39C5BB', backgroundColor: '#fff', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 } : { color: 'white', backgroundColor: '#39C5BB', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 }}>CREATE AN ACCOUNT</Text>
                     </TouchableOpacity>
-                </SafeAreaView>
-            )
-        } else {
-            return (
-                <SafeAreaView>
-                    <Text>You are registered!</Text>
                     <TouchableOpacity
-                        onPressIn={() => setIsFocused(true)}
+                        onPressIn={() => setIsFocused2(true)}
                         onPress={() => {
-                            setIsFocused(false)
+                            setIsFocused2(false)
                             navigation.navigate('Home', { screen: 'Game' })
                         }}
-                        style={{ justifyContentL: 'center', alignItems: 'center' }}
+                        style={{ width: 250, marginTop: 2.5 }}
                     >
-                        <Text style={isFocused ? { color: 'white', backgroundColor: '#39C5BB', fontSize: 20, padding: 10 } : { color: '#39C5BB', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>BACK TO GAME</Text>
+                        <Text style={isFocused2 ? { color: '#52d8f2', backgroundColor: '#fff', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 } : { color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 }}>BACK</Text>
                     </TouchableOpacity>
-                </SafeAreaView>
-            )
-        }
+                </View>
+                <View style={{ flex: 1 }}></View>
+            </SafeAreaView>
+        )
+    } else {
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}></View>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        source={require('../assets/like.gif')}
+                        style={{ height: 100, width: 100 }}
+                    />
+                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>You are registered!</Text>
+                    <Text style={{ fontSize: 20 }}>Your secret is {secret}</Text>
+                    <TouchableOpacity
+                        onPressIn={() => setIsFocused1(true)}
+                        onPress={() => {
+                            setIsFocused1(false)
+                            navigation.navigate('Game')
+                        }}
+                        style={{ width: 250, }}
+                    >
+                        <Text style={isFocused1 ? { color: '#39C5BB', backgroundColor: '#fff', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 } : { color: 'white', backgroundColor: '#39C5BB', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 }}>START THE GAME!</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1 }}></View>
+            </SafeAreaView>
+        )
     }
 
-    return (
-        <DefaultLayout>
-            <Register />
-        </DefaultLayout>
-    )
+
 }
 
 export default register_screen
