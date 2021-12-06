@@ -10,6 +10,8 @@ import home_screen from '../screens/homescreen.js';
 import convert_game_screen from '../screens/convert_game.js';
 import test_screen from '../screens/test.js';
 import news_screen from '../screens/news.js';
+import register_screen from '../screens/register.js';
+import start_view_screen from '../screens/start_view_screen.js';
 
 const Tab = createBottomTabNavigator()
 
@@ -53,7 +55,7 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen
-                name="Converter"
+                name="Convert"
                 component={currency_converter_screen}
                 options={{
                     tabBarIcon: ({ focused }) => (
@@ -183,6 +185,16 @@ const Tabs = () => {
                         </View>
                     )
                 }}
+            />
+            <Tab.Screen
+                name="Register"
+                component={register_screen}
+                tabBarShowLabel={false}
+            />
+            <Tab.Screen
+                name="Start"
+                component={start_view_screen}
+                tabBarShowLabel={false}
             />
         </Tab.Navigator>
     )
