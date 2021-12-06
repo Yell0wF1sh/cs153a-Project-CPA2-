@@ -1,10 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 
 export const DefaultLayout = ({ children }) => {
     return (
-        <View style={{ height: "92%", weight: '100%' }}>
+        <ImageBackground
+            source={require('../assets/background.jpg')}
+            resizeMode='cover'
+            style={{ height: "100%", weight: '100%', opacity: 0.8 }}
+            blurRadius={30}
+        >
             {children}
-        </View>
+        </ImageBackground>
     )
 }

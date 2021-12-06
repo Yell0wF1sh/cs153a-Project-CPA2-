@@ -81,7 +81,7 @@ function register_screen({ navigation }) {
                         onPressIn={() => setIsFocused1(true)}
                         onPress={() => {
                             setIsFocused1(false)
-                            navigation.navigate('Game')
+                            navigation.navigate('Games')
                         }}
                         style={{ width: 250, }}
                     >

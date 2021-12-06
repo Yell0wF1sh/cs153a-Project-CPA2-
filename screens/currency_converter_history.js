@@ -21,6 +21,7 @@ const wait = (timeout) => {
 const CurrencyConvertorHistory = () => {
     const [history, setHistory] = useState([])
     const [refreshing, setRefreshing] = useState(false)
+    const [isFocused1, setIsFocused1] = useState(false)
     const scrollY = React.useRef(new Animated.Value(0)).current
     const styles = StyleSheet.create({
         container: {
@@ -78,8 +79,17 @@ const CurrencyConvertorHistory = () => {
             {/* <Image
                 style={StyleSheet.absoluteFillObject}
             /> */}
-            <View style={{ borderBottomWidth: 1, borderBottomColor: 'grey', paddingBottom: 3 }}>
+            <View style={{ borderBottomWidth: 1, borderBottomColor: 'grey', paddingBottom: 3, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ fontSize: 40 }}>History</Text>
+                <TouchableOpacity
+                    onPressIn={() => setIsFocused1(true)}
+                    onPress={() => {
+                        clearHistory()
+                        setHistory([])
+                    }}
+                >
+                    <Text style={isFocused1 ? { color: '#39C5BB', backgroundColor: '#fff', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 10 } : { color: 'white', backgroundColor: '#39C5BB', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 10 }}>Clear History</Text>
+                </TouchableOpacity>
             </View>
             <Animated.FlatList
                 data={history}
@@ -132,15 +142,6 @@ const CurrencyConvertorHistory = () => {
                 )}
             />
             <View>
-                <Button
-                    title='Clear History'
-                    color='#d32f2f'
-                    onPress={() => {
-                        clearHistory()
-                        setHistory([])
-                    }
-                    }
-                />
             </View>
         </SafeAreaView>
     )

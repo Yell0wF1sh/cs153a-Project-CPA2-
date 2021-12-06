@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { DefaultLayout } from '../components/screen_layout';
 
 function about_screen({ navigation }) {
     return (
-        <View style={{ height: "100%", weight: '100%' }}>
+        <DefaultLayout>
             <About />
-        </View>
+        </DefaultLayout>
     )
 }
 

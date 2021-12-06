@@ -14,9 +14,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
-        <Stack.Screen name="Home" component={Tabs} />
+        <Stack.Screen name="HomeMain" component={Tabs} />
         <Stack.Screen
-          name="Game"
+          name="Games"
           component={convert_game_screen}
         />
         <Stack.Screen

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import axios from 'axios';
-import convert_game_screen from './convert_game';
-import register_screen from './register';
 import { DefaultLayout } from '../components/screen_layout';
 
 const start_view_screen = ({ navigation }) => {
@@ -15,10 +13,9 @@ const start_view_screen = ({ navigation }) => {
 
     useEffect(() => {
         const fetch = async () => {
-            await axios.get('https://converter-game.herokuapp.com/login',
+            await axios.post('https://converter-game.herokuapp.com/login',
                 { email: email, secret: secret })
                 .then((message) => {
-                    console.log(message)
                     setIsLogged(message['data']['success'])
                 })
                 .catch((error) => console.error(error))
@@ -29,7 +26,7 @@ const start_view_screen = ({ navigation }) => {
 
     let ErrorMessage = (<View></View>)
 
-    if (tryCount > 0 && !isLogged) {
+    if (tryCount > 0 && isLogged) {
         ErrorMessage = (<View><Text style={{ fontSize: 20, color: 'red', fontWeight: 'bold', textAlign: 'center' }}>Failed to login! Check your email and secret!</Text></View>)
     }
 
@@ -99,8 +96,7 @@ const start_view_screen = ({ navigation }) => {
                         <TouchableOpacity
                             onPressIn={() => setIsFocused1(true)}
                             onPress={() => {
-                                setIsFocused1(false)
-                                navigation.navigate('Game')
+                                navigation.navigate('Games')
                             }}
                             style={{ width: 250 }}
                         >
