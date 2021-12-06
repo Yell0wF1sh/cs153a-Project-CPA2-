@@ -65,14 +65,23 @@ function convert_game_screen({ navigation }) {
                     isIncrease={(Math.sign(percentChange) == 1)}
 
                 >
-                    <Button
+                    <TouchableOpacity
+                        onPress={() => {
+                            setCurrencyNow(item['historyTitle'])
+                            setChangeTimes(changeTimes + 1)
+                        }}
+                    // style={{ width: 300, marginTop: 5 }}
+                    >
+                        <Text style={{ color: 'white', backgroundColor: '#39C5BB', padding: 10, textAlign: 'center', borderRadius: 20 }}>SWITCH CURRENCY</Text>
+                    </TouchableOpacity>
+                    {/* <Button
                         title='SWITCH CURRENCY'
                         color='#009dd6'
                         onPress={() => {
                             setCurrencyNow(item['historyTitle'])
                             setChangeTimes(changeTimes + 1)
                         }}
-                    />
+                    /> */}
                 </CurrencyCard>
             )
         }

@@ -201,6 +201,7 @@ const CurrencyConvertor = () => {
                             <Picker.Item label={currencyName(9)} value={currencyName(9)} />
                         </Picker>
                     </View>
+                    <Text style={{ fontSize: 20, textAlign: 'center' }}>Enter the value here:</Text>
                     <TextInput
                         style={{
                             width: '80%',
@@ -214,14 +215,15 @@ const CurrencyConvertor = () => {
                         onChangeText={text => setTempValue(text)}
                     />
                 </View>
-                <View style={{ flex: 0.5 }}>
-                    <Button
-                        title='Convert'
-                        color='#009dd6'
+                <View style={{ flex: 0.5, alignItems: 'center' }}>
+                    <TouchableOpacity
                         onPress={() => {
                             setNum1(tempValue)
                         }}
-                    />
+                        style={{ width: 200 }}
+                    >
+                        <Text style={{ color: '#fff', backgroundColor: '#52d8f2', fontSize: 20, padding: 10, textAlign: 'center', borderRadius: 20 }}>Convert</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 2 }}></View>
             </SafeAreaView>
