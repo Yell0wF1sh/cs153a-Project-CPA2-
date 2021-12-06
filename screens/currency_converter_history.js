@@ -141,7 +141,7 @@ const CurrencyConvertorHistory = () => {
                     { useNativeDriver: true }
                 )}
             />
-            <View>
+            <View style={{ height: 50 }}>
             </View>
         </SafeAreaView>
     )

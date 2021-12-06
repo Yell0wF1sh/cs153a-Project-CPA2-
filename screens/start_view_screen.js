@@ -46,14 +46,14 @@ const start_view_screen = ({ navigation }) => {
                             onChangeText={(text) => {
                                 setEmail(text)
                             }}
-                            style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginBottom: 2.5 }}
+                            style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginBottom: 2.5, width: 200, textAlign: 'center' }}
                         />
                         <TextInput
                             placeholder='Secret'
                             onChangeText={(text) => {
                                 setSecret(text)
                             }}
-                            style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginTop: 2.5, marginBottom: 5 }}
+                            style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginTop: 2.5, marginBottom: 5, width: 200, textAlign: 'center' }}
                         />
                         <TouchableOpacity
                             onPress={() => {

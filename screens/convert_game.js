@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView, Dimensions } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import { currencyInfo } from '../components/currency_variables';
 import { CurrencyCard } from '../components/component_templates'
@@ -126,9 +126,9 @@ function convert_game_screen({ navigation }) {
                         padding: 5,
                     }}>
                         <Text style={{ color: 'grey', fontSize: 25 }}>You started with €100</Text>
-                        <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Now you own {currencyNowAmount} {currencyNow}</Text>
+                        <Text style={{ fontSize: 30, fontWeight: "bold" }}>Now you own {currencyNowAmount} {currencyNow}</Text>
                         <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} EUR</Text>
-                        <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
+                        <Text style={{ fontSize: 30, fontWeight: "bold" }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
                         <TouchableOpacity
                             onPressIn={() => setIsFocused1(true)}
                             onPress={() => {

@@ -34,13 +34,14 @@ function register_screen({ navigation }) {
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}></View>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 5 }}>Enter your email here: </Text>
                     <TextInput
                         placeholder='Email'
                         onChangeText={(text) => {
                             setEmail(text)
                             console.log(email)
                         }}
-                        style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginBottom: 2.5 }}
+                        style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginBottom: 2.5, width: 250, textAlign: 'center' }}
                     />
                     <TouchableOpacity
                         onPressIn={() => setIsFocused1(true)}
@@ -70,7 +71,7 @@ function register_screen({ navigation }) {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}></View>
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 5 }}>
                     <Image
                         source={require('../assets/like.gif')}
                         style={{ height: 100, width: 100 }}
