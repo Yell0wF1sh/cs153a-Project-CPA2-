@@ -2,36 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { RefreshControl, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, ImageBackground, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-community/picker'
 import { currencyInfo } from '../components/currency_variables';
-import moment from 'moment';
 import { CurrencyCard } from '../components/component_templates'
 import { currencyList } from '../components/currency_variables';
-import { currencyName, currencyAbbr } from '../components/currency_variables';
 import { DefaultLayout } from '../components/screen_layout';
-import start_view_screen from './start_view_screen';
 import ValueProvider, { useValue } from '../components/value_context';
 import axios from 'axios';
 
 function convert_game_screen({ navigation }) {
 
     const ConvertGame = () => {
-        const [playerId, setPlayerId] = useState("Steve")
         const [currencyLast, setCurrencyLast] = useState("EUR")
         const [currencyLastAmount, setCurrencyLastAmount] = useState(100)
         const [currencyNow, setCurrencyNow] = useState("EUR")
         const [currencyNowAmount, setCurrencyNowAmount] = useState(100)
-        const [currentTime, setCurrenctTime] = useState(moment().format())
         const [changeTimes, setChangeTimes] = useState(0)
         const [profile, setProfile] = useState([])
         const [currencyAmountMod, setCurrencyAmountMod] = useState(0)
         const [cvLs, setCvLs] = useState([]) //currency value list
-        const [isStart, setIsStart] = useState(false)
-        const [isRegistering, setIsRegistering] = useState(false)
-        const styles = StyleSheet.create({
-            text: {
-                fontSize: 18,
-            }
-
-        })
+        const [isRefresh, setIsRefresh] = useState(false)
+        const [isFocused, setIsFocused] = useState(false)
 
         useEffect(() => {
             const fetchLs = async () => {
@@ -42,7 +31,7 @@ function convert_game_screen({ navigation }) {
             }
             fetchLs()
             console.log(cvLs)
-        }, [isStart])
+        }, [isRefresh])
 
         const getChangePer = (cvLs, length, currencyName) => {
             if (length != 0) { return (Math.floor(cvLs[1]['currSymbol'][currencyName] - cvLs[0]['currSymbol'][currencyName] * 10) / 1000) }
@@ -63,12 +52,6 @@ function convert_game_screen({ navigation }) {
                 setCurrencyAmountMod(Math.floor(cam * 10000) / 10000)
             }
         }, [currencyNowAmount])
-
-
-        useEffect(() => {
-            setCurrencyLast(currencyNow)
-
-        }, [currencyNow])
 
         const renderCCards = ({ item }) => {
             let currencyName = item['historyTitle']
@@ -120,44 +103,43 @@ function convert_game_screen({ navigation }) {
         //         </View>
         // }
 
-        if (!isStart) {
-            return (
-                <SafeAreaView>
-                    <Text>This game</Text>
-                    <Button
-                        title='Start!'
-                        onPress={() => navigation.navigate(start_view_screen)}
+        return (
+            <ValueProvider data={profile}>
+                <SafeAreaView style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
+                    <SafeAreaView style={{
+                        flex: 2,
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        // alignItems: 'center',
+                        backgroundColor: 'white',
+                        borderRadius: 10,
+                        padding: 5,
+                    }}>
+                        <Text style={{ color: 'grey', fontSize: 25 }}>You started with €100</Text>
+                        <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Now you own {currencyNowAmount} {currencyNow}</Text>
+                        <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} EUR</Text>
+                        <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
+                        <TouchableOpacity
+                            onPressIn={() => setIsFocused(true)}
+                            onPress={() => {
+                                setIsRefresh(true)
+                                setIsFocused(false)
+                            }}
+                            style={{ alignItems: 'center' }}
+                        >
+                            <Text style={isFocused ? { color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10 } : { color: '#52d8f2', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>REFRESH</Text>
+                        </TouchableOpacity>
+                    </SafeAreaView>
+                    <FlatList
+                        data={currencyInfo}
+                        renderItem={renderCCards}
+                        numColumns='2'
+                        style={{ paddingTop: 10, flex: 2 }}
                     />
                 </SafeAreaView>
-            )
-        } else {
-            return (
-                <ValueProvider data={profile}>
-                    <SafeAreaView style={{ flex: 1, width: '100%', height: '100%', padding: 10 }}>
-                        <SafeAreaView style={{
-                            flex: 2,
-                            flexWrap: 'wrap',
-                            justifyContent: 'center',
-                            // alignItems: 'center',
-                            backgroundColor: 'white',
-                            borderRadius: 10,
-                            padding: 5,
-                        }}>
-                            <Text style={{ color: 'grey', fontSize: 25 }}>You started with €100</Text>
-                            <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Now you own {currencyNowAmount} {currencyNow}</Text>
-                            <Text style={{ color: 'grey', fontSize: 25 }}>which is {currencyAmountMod} EUR</Text>
-                            <Text style={{ fontSize: 30, fontWeight: "bold", flexWrap: 'wrap' }}>Your saving {currencyAmountMod < 100 ? "decreased" : "increased"} by {currencyAmountMod < 100 ? Math.floor(currencyAmountMod * 100) / 10000 : Math.floor(currencyAmountMod * 100) / 10000 - 1}%</Text>
-                        </SafeAreaView>
-                        <FlatList
-                            data={currencyInfo}
-                            renderItem={renderCCards}
-                            numColumns='2'
-                            style={{ paddingTop: 10, flex: 2 }}
-                        />
-                    </SafeAreaView>
-                </ValueProvider>
-            )
-        }
+            </ValueProvider>
+        )
+
     }
 
     return (

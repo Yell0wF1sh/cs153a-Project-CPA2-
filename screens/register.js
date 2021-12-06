@@ -55,7 +55,7 @@ function register_screen({ navigation }) {
                         onPressIn={() => setIsFocused(true)}
                         onPress={() => {
                             setIsFocused(false)
-                            navigation.navigate('Tabs', { screen: 'Game' })
+                            navigation.navigate('Home', { screen: 'Game' })
                         }}
                         style={{ justifyContentL: 'center', alignItems: 'center' }}
                     >

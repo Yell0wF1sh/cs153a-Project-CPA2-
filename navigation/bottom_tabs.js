@@ -7,11 +7,9 @@ import currency_converter_screen from '../screens/currency_converter.js'
 import about_screen from '../screens/about.js';
 import currency_converter_history_screen from '../screens/currency_converter_history.js';
 import home_screen from '../screens/homescreen.js';
-import convert_game_screen from '../screens/convert_game.js';
+import start_view_screen from '../screens/start_view_screen.js';
 import test_screen from '../screens/test.js';
 import news_screen from '../screens/news.js';
-import register_screen from '../screens/register.js';
-import start_view_screen from '../screens/start_view_screen.js';
 
 const Tab = createBottomTabNavigator()
 
@@ -55,7 +53,7 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen
-                name="Convert"
+                name="Converter"
                 component={currency_converter_screen}
                 options={{
                     tabBarIcon: ({ focused }) => (
@@ -71,7 +69,7 @@ const Tabs = () => {
                             />
                             <Text
                                 style={{ color: focused ? '#52d8f2' : 'black', fontSize: 8, fontWeight: "bold" }}
-                            >CONVERTER</Text>
+                            >CONVERT</Text>
                         </View>
                     )
                 }}
@@ -144,7 +142,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="Game"
-                component={convert_game_screen}
+                component={start_view_screen}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -185,16 +183,6 @@ const Tabs = () => {
                         </View>
                     )
                 }}
-            />
-            <Tab.Screen
-                name="Register"
-                component={register_screen}
-                tabBarShowLabel={false}
-            />
-            <Tab.Screen
-                name="Start"
-                component={start_view_screen}
-                tabBarShowLabel={false}
             />
         </Tab.Navigator>
     )

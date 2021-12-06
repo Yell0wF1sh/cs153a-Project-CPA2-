@@ -9,8 +9,6 @@ const start_view_screen = ({ navigation }) => {
     const [isL, setIsL] = useState(false)
     const [email, setEmail] = useState()
     const [secret, setSecret] = useState()
-    const [isFocused1, setIsFocused1] = useState(false)
-    const [isFocused2, setIsFocused2] = useState(false)
 
     const StartView = () => {
         useEffect(() => {
@@ -26,40 +24,51 @@ const start_view_screen = ({ navigation }) => {
         }, [isL])
 
         return (
-            <SafeAreaView>
-                <TextInput
-                    placeholder='Email'
-                    onChangeText={(text) => {
-                        setEmail(text)
-                    }}
-                />
-                <TextInput
-                    placeholder='Secret'
-                    onChangeText={(text) => {
-                        setSecret(text)
-                    }}
-                />
-                <TouchableOpacity
-                    onPressIn={() => setIsFocused1(true)}
-                    onPress={() => {
-                        setIsL(true)
-                        setIsFocused1(false)
-                        navigation.navigate(convert_game_screen)
-                    }}
-                    style={{ justifyContentL: 'center', alignItems: 'center' }}
-                >
-                    <Text style={isFocused1 ? { color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10 } : { color: '#52d8f2', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>LOGIN</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPressIn={() => setIsFocused2(true)}
-                    onPress={() => {
-                        setIsFocused2(false)
-                        navigation.navigate(register_screen)
-                    }}
-                    style={{ justifyContentL: 'center', alignItems: 'center' }}
-                >
-                    <Text style={isFocused2 ? { color: 'white', backgroundColor: '#39C5BB', fontSize: 20, padding: 10 } : { color: '#39C5BB', backgroundColor: '#fff', fontSize: 20, padding: 10 }}>REGISTER</Text>
-                </TouchableOpacity>
+            <SafeAreaView style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}></View>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        source={require('../assets/game_present.png')}
+                        style={{ height: 200, width: 200, marginBottom: 10 }}
+                    />
+                    <Text style={{ fontSize: 40, fontWeight: 'bold', fontStyle: 'italic', marginBottom: 10 }}>Convert Game</Text>
+                    <TextInput
+                        placeholder='Email'
+                        onChangeText={(text) => {
+                            setEmail(text)
+                        }}
+                        style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginBottom: 2.5 }}
+                    />
+                    <TextInput
+                        placeholder='Secret'
+                        onChangeText={(text) => {
+                            setSecret(text)
+                        }}
+                        style={{ fontSize: 20, backgroundColor: 'white', borderRadius: 20, padding: 5, marginTop: 2.5, marginBottom: 5 }}
+                    />
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsL(true)
+                            navigation.navigate('Home', { screen: 'Game' })
+                        }}
+                        style={{ width: 150, marginTop: 5, marginBottom: 2.5, borderRadius: 20 }}
+                    >
+                        <Text style={{ color: 'white', backgroundColor: '#52d8f2', fontSize: 20, padding: 10, textAlign: 'center' }}>
+                            LOGIN
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate('Register')
+                        }}
+                        style={{ width: 150, marginTop: 2.5, borderRadius: 20 }}
+                    >
+                        <Text style={{ color: 'white', backgroundColor: '#39C5BB', fontSize: 20, padding: 10, textAlign: 'center' }}>
+                            REGISTER
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1 }}></View>
             </SafeAreaView>
         )
     }
