@@ -130,12 +130,12 @@ const CurrencyConvertorHistory = () => {
                 }
                 }
                 style={{ paddingHorizontal: 10 }}
-                // refreshControl={
-                //     <RefreshControl
-                //         refreshing={refreshing}
-                //         onRefresh={onRefresh}
-                //     />
-                // }
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                     { useNativeDriver: true }
